@@ -7,3 +7,7 @@ vendor/
 docker-compose.yml
 
 Dockerfile
+
+composer.json
+
+composer.lock
