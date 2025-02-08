@@ -2,7 +2,12 @@
 
 namespace App\Controllers;
 
-class HomeController
-{
+use App\Core\Controller;
 
+class HomeController extends Controller
+{
+    public function home() : void
+    {
+        $this->render('home');
+    }
 }
