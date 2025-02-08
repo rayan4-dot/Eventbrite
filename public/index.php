@@ -1,14 +1,10 @@
-<?php 
+<?php
 
+require_once __DIR__ . '/../vendor/autoload.php';
 
-require __DIR__. "/../vendor/autoload.php";
+use App\Core\Application;
 
-use App\Core\Database;
+$app = new Application(dirname(__DIR__), []);
+require_once __DIR__ . '/../app/core/web.php';
 
-Database::getInstance();
-$stmt = Database::getConnection();
-$data = $stmt->prepare("SELECT * FROM users");
-$data->execute();
-$users = $data->fetchAll(\PDO::FETCH_ASSOC);
-
-print_r($users);
+$app->run();

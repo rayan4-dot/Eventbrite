@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign up | Eventbrite</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="/public/assets/css/style.css">
+    <link rel="stylesheet" href="../../../public/assets/css/style.css">
 
 
 </head>
@@ -20,7 +20,7 @@
     <!-- Header with Logo -->
     <header class="w-full bg-white/90 backdrop-blur-sm shadow-sm py-4">
         <div class="container mx-auto px-4">
-            <img src="/public/assets/images/logo.png" alt="Eventbrite" class="h-9"/>
+            <img src="../../../public/assets/images/logo.png" alt="Eventbrite" class="h-9"/>
         </div>
     </header>
 
@@ -121,10 +121,10 @@
 
                     <div class="mt-6 grid grid-cols-2 gap-3">
                         <button class="flex items-center justify-center px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50">
-                            <img src="/public/assets/images/Google_2015_logo.svg.webp" style="width: 76px; margin: 19px;" alt="Google logo" class="mr-2" />
+                            <img src="../../../public/assets/images/Google_2015_logo.webp" style="width: 76px; margin: 19px;" alt="Google logo" class="mr-2" />
                         </button>
                         <button class="flex items-center justify-center px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50">
-                            <img src="/public/assets/images/Facebook-Logo-2019.png" style="width: 76px; margin: 19px;" alt="Facebook logo" class="mr-2" />
+                            <img src="../../../public/assets/images/Facebook-Logo-2019.png" style="width: 76px; margin: 19px;" alt="Facebook logo" class="mr-2" />
                         </button>
                     </div>
                 </div>
