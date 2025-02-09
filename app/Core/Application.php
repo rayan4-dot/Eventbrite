@@ -4,6 +4,7 @@ namespace App\Core;
 
 use App\Core\Http\Request;
 use App\Core\Http\Response;
+use App\Models\User;
 
 class Application
 {
@@ -13,6 +14,8 @@ class Application
     public Response $response;
     public Router $router;
     public View $view;
+    public Database $db;
+    public User $user;
 
     public function __construct(string $root_path, array $config)
     {
@@ -22,6 +25,16 @@ class Application
         $this->response = new Response;
         $this->router = new Router($this->request, $this->response);
         $this->view = new View;
+        $this->db = new Database($config);
+        $this->user = new User;
+    }
+
+    public function login(User $user) : bool
+    {
+        $this->user = $user;
+        $primaryKey = $user->primaryKey();
+        $id = $user->{$primaryKey};
+        return true;
     }
 
     public function run() : void

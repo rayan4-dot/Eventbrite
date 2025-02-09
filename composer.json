@@ -4,7 +4,8 @@
   "require": {
     "vlucas/phpdotenv": "^5.2",
     "symfony/var-dumper": "^5.3",
-    "twig/twig": "^3.19"
+    "twig/twig": "^3.19",
+    "ext-pdo": "*"
   },
   "autoload": {
     "psr-4": {
