@@ -85,9 +85,9 @@
         <div class="max-w-7xl mx-auto px-4">
             <div class="relative rounded-2xl overflow-hidden shadow-2xl">
                 <div class="hero-gradient absolute inset-0 z-10"></div>
-                <video src="/public/assets/video/even2.mp4" class="w-full h-[480px] object-cover hero-image active" autoplay muted loop></video>
-                <video src="/public/assets/video/event.mp4" class="w-full h-[480px] object-cover hero-image" autoplay muted loop></video>
-                <video src="/public/assets/video/ucl.mp4" class="w-full h-[480px] object-cover hero-image" autoplay muted loop></video>
+                <video src="./assets/video/even2.mp4" class="w-full h-[480px] object-cover hero-image active" autoplay muted loop></video>
+                <video src="./assets/video/event.mp4" class="w-full h-[480px] object-cover hero-image" autoplay muted loop></video>
+                <video src="./assets/video/ucl.mp4" class="w-full h-[480px] object-cover hero-image" autoplay muted loop></video>
                 <div class="absolute top-1/2 left-12 transform -translate-y-1/2 z-20 space-y-6">
                     <h1 class="text-5xl font-extrabold leading-tight max-w-2xl">
                         Discover Your Next<br>

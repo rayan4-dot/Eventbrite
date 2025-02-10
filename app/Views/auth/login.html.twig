@@ -1,0 +1,22 @@
+{% extends 'layouts/authLayout.html.twig' %}
+
+{% block title  %}Login - Eventbrite{% endblock %}
+
+
+{% block header %} Login {% endblock %}
+
+{% block formContent %}
+
+    {% import 'macros/form.html.twig' as form %}
+
+    {{ form.inputField('email', 'email', 'Email', model.email, '', model.errors) }}
+    {{ form.inputField('password', 'password', 'Password', model.password, '', model.errors) }}
+
+    <button
+            type="submit"
+            class="w-full bg-[#d1410c] hover:bg-[#b83a0b] text-white font-bold py-3 px-4 rounded-lg transition duration-200"
+    >
+        Log in
+    </button>
+
+{% endblock %}
