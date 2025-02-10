@@ -23,6 +23,12 @@ class AuthController extends Controller
         $this->render('auth/login', ['model' => $login]);
     }
 
+    public function logout()
+    {
+        Application::$app->logout();
+        Application::$app->response->redirect('/');
+    }
+
     public function register(Request $request)
     {
         $user = new User();

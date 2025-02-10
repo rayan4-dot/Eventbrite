@@ -11,6 +11,7 @@ $config['db'] = require_once __DIR__ . '/../app/config/database.php';
 $app = new Application(dirname(__DIR__), $config);
 require_once __DIR__ . '/../app/core/web.php';
 
-//$app->db->applyMigrations();
+$app->db->applyMigrations();
 
 $app->run();
+

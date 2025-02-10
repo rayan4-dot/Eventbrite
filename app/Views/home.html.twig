@@ -73,8 +73,14 @@
                         </svg>
                     </div>
                     <a href="#" class="text-gray-300 hover:text-white transition-colors">Browse Events</a>
-                    <a href="/login" class="px-4 py-2 bg-orange-600 text-white rounded-md hover:bg-orange-700 transition-colors">Sign In</a>
-                    <a href="/register" class="px-4 py-2 bg-orange-600 text-white rounded-md hover:bg-orange-700 transition-colors">Sign Up</a>
+                    {% if isLoggedIn %}
+                        <!-- If logged in, show Sign Out button (or similar) -->
+                        <a href="/logout" class="px-4 py-2 bg-orange-600 text-white rounded-md hover:bg-orange-700 transition-colors">Sign Out</a>
+                    {% else %}
+                        <!-- If not logged in, show Sign In and Sign Up buttons -->
+                        <a href="/login" class="px-4 py-2 bg-orange-600 text-white rounded-md hover:bg-orange-700 transition-colors">Sign In</a>
+                        <a href="/register" class="px-4 py-2 bg-orange-600 text-white rounded-md hover:bg-orange-700 transition-colors">Sign Up</a>
+                    {% endif %}
                 </div>
             </div>
         </div>
