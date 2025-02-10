@@ -43,6 +43,13 @@
                 </label>
                 <input type="file" class="file-input file-input-bordered file-input-primary w-full" />
             </div>
+                <!-- Event Title -->
+    <div class="form-control">
+        <label class="label">
+            <span class="label-text font-semibold">Event Title</span>
+        </label>
+        <input type="text" placeholder="Enter event title" class="input input-bordered" />
+    </div>
 
             <!-- Event Details Grid -->
             <div class="grid md:grid-cols-2 gap-6">
