@@ -13,7 +13,6 @@ class Database
         }
         catch(\PDOException $e) {
             dump("Database connection error: " . $e->getMessage());
-
         }
     }
 
