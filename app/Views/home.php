@@ -282,6 +282,112 @@
         <!--    <?php endif; ?>-->
         </div>
     </section>
+    <footer class="bg-gray-800 text-white py-12 mt-16">
+    <div class="container mx-auto px-4">
+        <!-- Main Footer Content -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
+            <!-- Company Info -->
+            <div>
+                <h3 class="text-xl font-bold mb-4">Eventbrite</h3>
+                <p class="text-gray-400 mb-4">Creating unforgettable experiences, one event at a time.</p>
+                <div class="flex space-x-4">
+                    <a href="#" class="text-gray-400 hover:text-white">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Quick Links -->
+            <div>
+                <h3 class="text-lg font-semibold mb-4">Quick Links</h3>
+                <ul class="space-y-2">
+                    <li><a href="/events" class="text-gray-400 hover:text-white">Browse Events</a></li>
+                    <li><a href="/create" class="text-gray-400 hover:text-white">Create Event</a></li>
+                    <li><a href="/pricing" class="text-gray-400 hover:text-white">Pricing</a></li>
+                    <li><a href="/resources" class="text-gray-400 hover:text-white">Resources</a></li>
+                    <li><a href="/blog" class="text-gray-400 hover:text-white">Blog</a></li>
+                    <li><a href="/help" class="text-gray-400 hover:text-white">Help Center</a></li>
+                </ul>
+            </div>
+
+            <!-- Categories -->
+            <div>
+                <h3 class="text-lg font-semibold mb-4">Event Categories</h3>
+                <ul class="space-y-2">
+                    <li><a href="/music" class="text-gray-400 hover:text-white">Music</a></li>
+                    <li><a href="/business" class="text-gray-400 hover:text-white">Business</a></li>
+                    <li><a href="/food" class="text-gray-400 hover:text-white">Food & Drink</a></li>
+                    <li><a href="/arts" class="text-gray-400 hover:text-white">Arts & Culture</a></li>
+                    <li><a href="/sports" class="text-gray-400 hover:text-white">Sports & Fitness</a></li>
+                    <li><a href="/workshops" class="text-gray-400 hover:text-white">Workshops</a></li>
+                </ul>
+            </div>
+
+            <!-- Contact Info -->
+            <div>
+                <h3 class="text-lg font-semibold mb-4">Contact Us</h3>
+                <ul class="space-y-2 text-gray-400">
+                    <li>
+                        <i class="fas fa-map-marker-alt mr-2"></i>
+                        123 Event Street, San Francisco, CA 94105
+                    </li>
+                    <li>
+                        <i class="fas fa-phone mr-2"></i>
+                        +1 (555) 123-4567
+                    </li>
+                    <li>
+                        <i class="fas fa-envelope mr-2"></i>
+                        support@eventbrite.com
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Newsletter Signup -->
+        <div class="border-t border-gray-700 py-8">
+            <div class="max-w-xl mx-auto text-center">
+                <h3 class="text-lg font-semibold mb-4">Subscribe to Our Newsletter</h3>
+                <form class="flex flex-col md:flex-row gap-4">
+                    <input 
+                        type="email" 
+                        placeholder="Enter your email" 
+                        class="flex-1 px-4 py-2 rounded bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    >
+                    <button 
+                        type="submit" 
+                        class="px-6 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition duration-300"
+                    >
+                        Subscribe
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Bottom Bar -->
+        <div class="border-t border-gray-700 pt-8">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-400 mb-4 md:mb-0">
+                    &copy; <?php echo date('Y'); ?> Eventbrite. All rights reserved.
+                </p>
+                <div class="flex flex-wrap justify-center gap-4 text-gray-400">
+                    <a href="/terms" class="hover:text-white">Terms of Service</a>
+                    <a href="/privacy" class="hover:text-white">Privacy Policy</a>
+                    <a href="/cookies" class="hover:text-white">Cookie Policy</a>
+                    <a href="/accessibility" class="hover:text-white">Accessibility</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
 
     <script src="/public/assets/js/main.js">
  
