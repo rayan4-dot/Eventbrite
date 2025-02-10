@@ -39,7 +39,7 @@
                 </div>
             </div>
 
-            <!-- Event Details -->
+            <!-- Event Detail -->
             <div>
                 <h1 class="text-4xl font-bold mb-4 text-orange-600">Tech Innovation Summit 2024</h1>
                 
