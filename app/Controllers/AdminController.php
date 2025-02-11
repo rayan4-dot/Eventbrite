@@ -2,7 +2,17 @@
 
 namespace App\Controllers;
 
-class AdminController
-{
+use App\Core\Controller;
 
+class AdminController extends Controller
+{
+    public function dashboard() : void
+    {
+        $this->render('/admin/dashboard');
+    }
+
+    public function users() : void
+    {
+        $this->render('/admin/users');
+    }
 }
