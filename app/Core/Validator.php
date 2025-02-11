@@ -16,6 +16,7 @@ class Validator
 
     public function validate(array $data, array $rules): bool
     {
+        dump($data);
         foreach ($rules as $attribute => $attributeRules) {
             $value = $data[$attribute] ?? null;
 
@@ -38,6 +39,7 @@ class Validator
                 }
             }
         }
+        dump($this->errors);
         return empty($this->errors);
     }
 
