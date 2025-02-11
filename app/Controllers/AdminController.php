@@ -16,7 +16,7 @@ class AdminController extends controller
     public function dashboard(Request $request)
     {
 
-
         $this->render('admin/dashboard');
     }
+
 }

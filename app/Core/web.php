@@ -13,3 +13,4 @@ $app->router->get('/register', [AuthController::class, 'register']);
 $app->router->post('/register', [AuthController::class, 'register']);
 $app->router->get('/dashboard', [AdminController::class, 'dashboard']);
 
+
