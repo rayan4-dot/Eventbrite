@@ -54,9 +54,9 @@ class Database
         if(!empty($newMigrations)) {
             $this->saveMigration($newMigrations);
         }
-        else {
-            echo "All migrations all applied";
-        }
+        // else {
+        //     echo "All migrations all applied";
+        // }
     }
 
     public function getAppliedMigrations() : array
