@@ -66,3 +66,26 @@ body {
     display: block;
 }
 
+body {
+    background-color: #1E1E28;
+    font-family: 'Inter', sans-serif;
+    color: #fff;
+}
+.input-dark {
+    background: #2D2D39;
+    border: 1px solid #3D3D4D;
+    color: white;
+}
+.input-dark:focus {
+    border-color: #F05537;
+    outline: none;
+    box-shadow: 0 0 0 1px #F05537;
+}
+.input-dark::placeholder {
+    color: #9CA3AF;
+}
+.select-dark {
+    background: #2D2D39;
+    border: 1px solid #3D3D4D;
+    color: white;
+}

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@latest/dist/full.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>{% block title %}{% endblock %}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        .hero-gradient {
+            background: linear-gradient(90deg, rgba(17, 24, 39, 0.8) 0%, rgba(17, 24, 39, 0.4) 100%);
+        }
+
+        .event-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .event-card:hover {
+            transform: translateY(-4px);
+        }
+
+        .interest-tag {
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .interest-tag:hover {
+            transform: translateY(-1px);
+        }
+
+        .city-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(180deg, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0.8) 100%);
+            z-index: 1;
+        }
+
+        .hero-image {
+            display: none;
+        }
+
+        .hero-image.active {
+            display: block;
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-white">
+<!-- Enhanced Navbar -->
+<nav class="bg-gray-900/80 backdrop-blur-md border-b border-gray-800 fixed w-full z-50">
+    <div class="max-w-7xl mx-auto px-4">
+        <div class="flex justify-between h-16 items-center">
+            <div class="text-orange-600 font-bold text-2xl">eventbrite</div>
+            <div class="flex items-center space-x-6">
+                <div class="relative">
+                    <input type="text" placeholder="Search events"
+                           class="px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg pl-10 text-white placeholder-gray-400">
+                    <svg class="w-5 h-5 absolute left-3 top-3 text-gray-400" fill="none" stroke="currentColor"
+                         viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                    </svg>
+                </div>
+                <div class="relative">
+                    <input type="text" placeholder="Location"
+                           class="px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg pl-10 text-white placeholder-gray-400">
+                    <svg class="w-5 h-5 absolute left-3 top-3 text-gray-400" fill="none" stroke="currentColor"
+                         viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                    </svg>
+                </div>
+                <a href="#" class="text-gray-300 hover:text-white transition-colors">Browse Events</a>
+                {% if isLoggedIn %}
+                    <!-- If logged in, show Sign Out button (or similar) -->
+                    <a href="/logout"
+                       class="px-4 py-2 bg-orange-600 text-white rounded-md hover:bg-orange-700 transition-colors">Sign
+                        Out</a>
+                {% else %}
+                    <!-- If not logged in, show Sign In and Sign Up buttons -->
+                    <a href="/login"
+                       class="px-4 py-2 bg-orange-600 text-white rounded-md hover:bg-orange-700 transition-colors">Sign
+                        In</a>
+                    <a href="/register"
+                       class="px-4 py-2 bg-orange-600 text-white rounded-md hover:bg-orange-700 transition-colors">Sign
+                        Up</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</nav>
+
+{% block content %}{% endblock %}
+
+<script src="/assets/js/main.js"></script>
+</body>
+</html>

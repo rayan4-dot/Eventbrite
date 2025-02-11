@@ -10,6 +10,8 @@ class Validator
     public const RULE_MIN = 'min';
     public const RULE_MAX = 'max';
     public const RULE_UNIQUE = 'unique';
+    public const RULE_DATE = 'date';
+
     public array $errors = [];
 
     public function validate(array $data, array $rules): bool
