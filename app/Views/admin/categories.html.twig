@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eventbrite - Admin Categories</title>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@latest/dist/full.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-900 text-white">
+    <!-- Navbar -->
+    <nav class="bg-gradient-to-r from-orange-500 to-red-500 text-white p-4 shadow-lg sticky top-0 z-50">
+        <div class="container mx-auto flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <a href="./dashboard" class="flex items-center space-x-4 group">
+                    <div class="bg-white p-2.5 rounded-xl shadow-lg group-hover:shadow-2xl transition-all duration-300">
+                        <span class="text-2xl text-orange-500">EM</span>
+                    </div>
+                    <span class="text-2xl font-bold">Events Management</span>
+                </a>
+            </div>
+            <div class="flex items-center space-x-8">
+                <div class="nav-item">
+                    <a href="/dashboard" class="hover:text-orange-200">Dashboard</a>
+                </div>
+                <div class="nav-item">
+                    <a href="/events/events" class="hover:text-orange-200">All Events</a>
+                </div>
+                <div class="nav-item">
+                    <a href="/events/analytics" class="hover:text-orange-200">Event Analytics</a>
+                </div>
+                <div class="flex items-center space-x-4 ml-6 border-l pl-6">
+                    <a href="/logout" class="bg-white text-orange-500 hover:bg-orange-100 px-4 py-2 rounded-lg">
+                        Logout
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container mx-auto mt-24 px-4">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <!-- Add Category Section -->
+            <div class="bg-gray-800 p-6 rounded-lg">
+                <h2 class="text-2xl font-bold mb-4 text-orange-500">Add Category</h2>
+                <form id="addCategoryForm">
+                    <div class="form-control">
+                        <label class="label">
+                            <span class="label-text text-white">Category Name</span>
+                        </label>
+                        <input
+                            type="text"
+                            id="newCategoryName"
+                            placeholder="Enter category name"
+                            class="input input-bordered bg-gray-700 text-white"
+                            required
+                        >
+                    </div>
+                    <div class="form-control mt-4">
+                        <button
+                            type="submit"
+                            class="btn btn-primary bg-orange-600 hover:bg-orange-700"
+                        >
+                            Add Category
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Categories List -->
+            <div class="bg-gray-800 p-6 rounded-lg md:col-span-2">
+                <h2 class="text-2xl font-bold mb-4 text-orange-500">Manage Categories</h2>
+                <div class="overflow-x-auto">
+                    <table class="table w-full">
+                        <thead>
+                            <tr class="bg-gray-700 text-white">
+                                <th>Name</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="categoriesTableBody">
+                            <!-- Categories will be dynamically added here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Category Modal -->
+    <dialog id="editCategoryModal" class="modal">
+        <div class="modal-box bg-gray-800">
+            <h3 class="font-bold text-lg text-orange-500">Edit Category</h3>
+            <form id="editCategoryForm" class="mt-4">
+                <input type="hidden" id="editCategoryId">
+                <div class="form-control">
+                    <label class="label">
+                        <span class="label-text text-white">Category Name</span>
+                    </label>
+                    <input
+                        type="text"
+                        id="editCategoryName"
+                        class="input input-bordered bg-gray-700 text-white"
+                        required
+                    >
+                </div>
+                <div class="modal-action">
+                    <button
+                        type="button"
+                        class="btn btn-ghost"
+                        onclick="document.getElementById('editCategoryModal').close()"
+                    >
+                        Cancel
+                    </button>
+                    <button
+                        type="submit"
+                        class="btn btn-primary bg-orange-600 hover:bg-orange-700"
+                    >
+                        Save Changes
+                    </button>
+                </div>
+            </form>
+        </div>
+    </dialog>
+
+</body>
+</html>
