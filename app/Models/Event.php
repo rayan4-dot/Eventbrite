@@ -10,8 +10,9 @@ abstract class Event extends DbModel
     public string $picture = '';
     public string $description = '';
     public string $eventDate = '';
+    public string $city = '';
     public ?float $price = null;
-    public string $type = '';
+    public int $capacity = 0;
 
     public function getTableName() : string
     {
@@ -22,10 +23,8 @@ abstract class Event extends DbModel
     {
         return [
             'title' => [$this->validator::RULE_REQUIRED],
-            'picture' => [$this->validator::RULE_REQUIRED],
             'description' => [$this->validator::RULE_REQUIRED],
-            'eventDate' => [$this->validator::RULE_REQUIRED, $this->validator::RULE_DATE],
-            'type' => [$this->validator::RULE_REQUIRED]
+            'eventDate' => [$this->validator::RULE_REQUIRED]
         ];
     }
 

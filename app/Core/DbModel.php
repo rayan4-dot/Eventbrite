@@ -12,12 +12,13 @@ abstract class DbModel extends Model
         $table = $this->getTableName();
         $attributes = $this->getAttributes();
         $columns = implode(',', $attributes);
-        dump($columns);
         $placeholders = implode(',', array_fill(0, count($attributes), '?'));
         $sql = "INSERT INTO $table ($columns) VALUES ($placeholders);";
         $stmt = $this->prepare($sql);
         $values = [];
+        dump($attributes);
         foreach($attributes as $attribute) {
+            dump($this->$attribute);
             $values[] = $this->{$attribute};
         }
         return $stmt->execute($values);
