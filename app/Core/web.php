@@ -22,3 +22,8 @@ $app->router->post('/events/create', [EventController::class, 'create']);
 $app->router->get('/admin/dashboard', [AdminController::class, 'dashboard']);
 $app->router->get('/admin/users', [AdminController::class, 'users']);
 $app->router->get('/admin/categories', [CategoryController::class, 'create']);
+$app->router->post('/admin/categories', [CategoryController::class, 'create']);
+
+$app->router->get('/admin/categories/edit/{id}', [CategoryController::class, 'edit']);
+$app->router->post('/admin/categories/edit/{id}', [CategoryController::class, 'edit']);
+$app->router->post('/admin/categories/delete/{id}', [CategoryController::class, 'delete']);

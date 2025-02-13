@@ -14,12 +14,12 @@ class CategoryController extends Controller
         $category = new Category();
         if($request->isPost()) {
             $category->loadData($request->getBody());
-
             if($category->validate() && $category->save()) {
-                $response->redirect('/dashboard');
+                $response->redirect('/admin/categories');
                 return;
             }
         }
-        $this->render('/admin/categories', ['model' => $category]);
+        $this->render('/admin/categories', ['model' => $category, "categories" => Category::getAll()]);
     }
+    
 }

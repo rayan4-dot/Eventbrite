@@ -1,0 +1,39 @@
+{% extends 'layouts/admin.html.twig' %}
+
+{% block title %} Edit Category {% endblock %}
+
+{% block content %}
+<div class="p-6">
+    <h2 class="text-xl font-bold text-white mb-6">Edit Category</h2>
+
+<form action="/admin/categories/edit/{{ model.id }}" method="POST">
+    <div class="mb-4">
+        <label class="text-gray-400">Category Name</label>
+        <input
+            type="text"
+            name="name"
+            value="{{ model.name }}"
+            class="px-4 py-2 bg-gray-700 text-white rounded-lg w-full"
+            required
+        />
+        {% if errors and errors.name %}
+            <div class="text-red-500 text-xs">{{ errors.name[0] }}</div>
+        {% endif %}
+    </div>
+    <div class="mb-4">
+        <label class="text-gray-400">Category Description</label>
+        <input
+            type="text"
+            name="description"
+            value="{{ model.description }}"
+            class="px-4 py-2 bg-gray-700 text-white rounded-lg w-full"
+        />
+    </div>
+    <div class="flex justify-end">
+        <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+            Save Changes
+        </button>
+    </div>
+</form>
+</div>
+{% endblock %}
