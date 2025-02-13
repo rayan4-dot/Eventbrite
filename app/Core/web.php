@@ -5,6 +5,9 @@ use App\Controllers\AuthController;
 use App\Controllers\EventController;
 use App\Controllers\AdminController;
 use App\Controllers\CategoryController;
+use App\Controllers\RegionController;
+use App\Controllers\CityController;
+use App\Controllers\SponsorController;
 
 $app->router->get('/', [HomeController::class, 'home']);
 
@@ -22,3 +25,9 @@ $app->router->post('/events/create', [EventController::class, 'create']);
 $app->router->get('/admin/dashboard', [AdminController::class, 'dashboard']);
 $app->router->get('/admin/users', [AdminController::class, 'users']);
 $app->router->get('/admin/categories', [CategoryController::class, 'create']);
+
+$app->router->get('/api/categories', [CategoryController::class, 'getAllCategories']);
+$app->router->get('/api/regions', [RegionController::class, 'getAllRegions']);
+$app->router->get('/api/cities', [CityController::class, 'getRegionCities']);
+$app->router->get('/api/sponsors', [SponsorController::class, 'getAllSponsors']);
+$app->router->get('/api/sponsors', [SponsorController::class, 'create']);

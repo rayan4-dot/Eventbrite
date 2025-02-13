@@ -97,7 +97,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     const addSponsorBtn = document.getElementById('addSponsorBtn');
     const eventTypeSelect = document.getElementById('eventType');
     const googleMeetSection = document.getElementById('googleMeetSection');
-    const citySection = document.getElementById('citySection');
+    const f2fEvent = document.getElementById('f2fEvent');
     const isPaidEventToggle = document.getElementById('isPaidEvent');
     const pricingSection = document.getElementById('pricingSection');
     const existingSponsorsSelect = document.getElementById('existingSponsors');
@@ -105,9 +105,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
     let sponsors = [];
 
     eventTypeSelect.addEventListener('change', (e) => {
-        const isRemote = e.target.value === 'remote';
+        const isRemote = e.target.value === 'online';
         googleMeetSection.classList.toggle('hidden', !isRemote);
-        citySection.classList.toggle('hidden', isRemote);
+        f2fEvent.classList.toggle('hidden', isRemote);
     });
 
     isPaidEventToggle.addEventListener('change', (e) => {

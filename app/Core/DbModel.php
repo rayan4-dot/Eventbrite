@@ -16,9 +16,7 @@ abstract class DbModel extends Model
         $sql = "INSERT INTO $table ($columns) VALUES ($placeholders);";
         $stmt = $this->prepare($sql);
         $values = [];
-        dump($attributes);
         foreach($attributes as $attribute) {
-            dump($this->$attribute);
             $values[] = $this->{$attribute};
         }
         return $stmt->execute($values);
@@ -35,6 +33,29 @@ abstract class DbModel extends Model
         }
         $stmt->execute();
         return $stmt->fetchObject(static::class);
+    }
+
+    public static function getAll() : array
+    {
+        $tableName = (new static)->getTableName();
+        $stmt = self::prepare("SELECT * FROM $tableName");
+        $stmt->execute();
+        return $stmt->fetchAll(\PDO::FETCH_CLASS, static::class);
+    }
+
+    public static function find(array $conditions): array
+    {
+        $tableName = (new static)->getTableName();
+        $attributes = array_keys($conditions);
+        $sql = implode(" AND ", array_map(fn($attr) => "$attr = :$attr", $attributes));
+        $stmt = self::prepare("SELECT * FROM $tableName WHERE $sql");
+
+        foreach ($conditions as $key => $value) {
+            $stmt->bindValue(":$key", $value);
+        }
+
+        $stmt->execute();
+        return $stmt->fetchAll(\PDO::FETCH_CLASS, static::class);
     }
 
     public function getDb() : Database

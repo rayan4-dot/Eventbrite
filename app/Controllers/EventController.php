@@ -12,21 +12,40 @@ class EventController extends Controller
 {
     public function create(Request $request, Response $response): void
     {
-        $event = null;
+        $event = new F2FEvent();
         if ($request->isPost()) {
             $data = $request->getBody();
-            $type = $data['type'];
-            if ($type === 'remote') {
+            $data['capacity'] = (int)$data['capacity'];
+            $data['price'] = (float)$data['price'];
+            $data['cityId'] = (int)$data['cityId'];
+
+            // handle the image upload
+            if (isset($_FILES['picture']) && !empty($_FILES['picture']['name'])) {
+                $eventImg = $_FILES['picture']['name'];
+                $temp_file = $_FILES['picture']['tmp_name'];
+                $folder = __DIR__  . "/../../public/assets/uploads/$eventImg";
+                if(move_uploaded_file($temp_file, $folder)) {
+                    $data['picture'] = "/uploads/$eventImg";
+                }
+            }
+
+
+            $type = $data['type'] ?? '';
+            if ($type === 'online') {
                 $event = new OnlineEvent();
-            } else if ($type === 'face-to-face') {
-                $event = new F2FEvent();
             }
             $event->loadData($data);
             if ($event->validate() && $event->save()) {
                 $response->redirect('/');
             }
-        }
 
-        $this->render('events/create', ['model' => $event]);
+        }
+//        dump($event); die;
+        $this->render('events/create', ['model' => $event, 'errors' => $event->getErrors()]);
+    }
+
+    public function showEvents()
+    {
+        $this->render('/events/index');
     }
 }
