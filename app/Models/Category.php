@@ -6,24 +6,49 @@ use App\Core\DbModel;
 
 class Category extends DbModel
 {
+    public int $id;
     public string $name = '';
-    public string $description = '';
-    public function getTableName() : string
+    public ?string $description = null;
+
+    public function getTableName(): string
     {
-      
+        // TODO: Implement getTableName() method.
         return 'categories';
     }
 
-    public function getAttributes() : array
+    public function getAttributes(): array
     {
-       
+        // TODO: Implement getAttributes() method.
         return ['name', 'description'];
     }
 
-    public function rules() : array
+    public function rules(): array
     {
         return [
             'name' => [$this->validator::RULE_REQUIRED]
         ];
+    }
+
+    public function updateCategory(int $id, array $data): bool
+    {
+        return $this->update($id, $data);
+    }
+
+    public function deleteCategory(int $id): bool
+    {
+        return $this->delete($id);
+    }
+
+    public static function getAll(): array
+    {
+        $table = (new static())->getTableName();
+        $stmt = self::prepare("SELECT * FROM $table");
+        $stmt->execute();
+        return $stmt->fetchAll(\PDO::FETCH_CLASS, static::class);
+    }
+
+    public static function getById(int $id): ?Category
+    {
+        return self::findOne(['id' => $id]);
     }
 }

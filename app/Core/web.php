@@ -29,3 +29,9 @@ $app->router->get('/admin/reject-user/{id}', [AdminController::class, 'rejectUse
 $app->router->post('/admin/block-user/{id}', [AdminController::class, 'blockUser']);
 $app->router->post('/admin/unblock-user/{id}', [AdminController::class, 'unblockUser']);
 
+$app->router->post('/admin/categories', [CategoryController::class, 'create']);
+
+$app->router->get('/admin/categories/edit/{id}', [CategoryController::class, 'edit']);
+$app->router->post('/admin/categories/edit/{id}', [CategoryController::class, 'edit']);
+
+$app->router->post('/admin/categories/delete/{id}', [CategoryController::class, 'delete']);
