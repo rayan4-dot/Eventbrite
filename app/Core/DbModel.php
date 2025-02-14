@@ -19,7 +19,7 @@ abstract class DbModel extends Model
         foreach($attributes as $attribute) {
             $values[] = $this->{$attribute};
         }
-        return $stmt->execute($values);
+        return $stmt->execute($values); 
     }
 
     public function update(int $id, array $data): bool

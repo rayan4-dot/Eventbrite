@@ -26,4 +26,5 @@ $app->router->post('/admin/categories', [CategoryController::class, 'create']);
 
 $app->router->get('/admin/categories/edit/{id}', [CategoryController::class, 'edit']);
 $app->router->post('/admin/categories/edit/{id}', [CategoryController::class, 'edit']);
+
 $app->router->post('/admin/categories/delete/{id}', [CategoryController::class, 'delete']);

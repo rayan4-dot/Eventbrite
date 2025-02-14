@@ -14,7 +14,7 @@
         </div>
 
         <!-- Modal Structure -->
-        <div id="addCategoryModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
+        <div id="CategoryModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
             <div class="bg-gray-800 p-6 rounded-lg w-full max-w-md">
                 <h3 class="text-xl font-bold text-white mb-4">Add Category</h3>
                 <form action="" method="POST" class="w-full">
@@ -81,15 +81,15 @@
                                 {{ category.total_events }} Events
                             </span>
                         </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                            <a href="/admin/categories/edit/{{ category.id }}" class="text-gray-400 hover:text-white mr-3">
-                                Edit
-                            </a>
-<form action="/admin/categories/delete/{{ category.id }}" method="POST" class="inline">
-    <button type="submit" class="text-red-500 hover:text-red-600">
-        Delete
+            <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+    <button class="edit-button text-gray-400 hover:text-white mr-3" data-id="{{ category.id }}">
+        Edit
     </button>
-</form>
+                        <form action="/admin/categories/delete/{{ category.id }}" method="POST" class="inline">
+                            <button type="submit" class="text-red-500 hover:text-red-600">
+                                Delete
+                            </button>
+                        </form>
 
                         </td>
                     </tr>
@@ -108,15 +108,15 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const addCategoryButton = document.getElementById('addCategoryButton');
-            const addCategoryModal = document.getElementById('addCategoryModal');
+            const CategoryModal = document.getElementById('CategoryModal');
             const closeModalButton = document.getElementById('closeModalButton');
 
             addCategoryButton.addEventListener('click', function() {
-                addCategoryModal.classList.remove('hidden');
+                CategoryModal.classList.remove('hidden');
             });
 
             closeModalButton.addEventListener('click', function() {
-                addCategoryModal.classList.add('hidden');
+                CategoryModal.classList.add('hidden');
             });
 
             // Close modal when clicking outside of it
