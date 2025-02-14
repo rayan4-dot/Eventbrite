@@ -4,7 +4,7 @@ namespace App\Models;
 
 class F2FEvent extends Event
 {
-    public int $cityId;
+    public ?int $cityId;
     public string $location = '';
 
     public function getAttributes() : array

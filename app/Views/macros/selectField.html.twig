@@ -3,7 +3,7 @@
         <label class="label">
             <span class="text-gray-300 font-medium">{{ label }}</span>
         </label>
-        <select name="{{ name }}" id="{{ id }}" class="select bg-gray-800 border-gray-700 focus:border-orange-600 select-dark w-full {{ class }}">
+        <select name="{{ name }}" id="{{ id }}" class="select bg-gray-800 border-gray-700 focus:border-orange-600 select-dark w-full {{ class }}  {% if errors[name] is defined %}border-red-500{% else %}border-gray-300{% endif %}">
             <option disabled selected>Select</option>
             {% for option_label, option_value in options %}
                 <option value="{{ option_value }}" {% if option_value == value %}selected{% endif %}>

@@ -7,9 +7,14 @@ use App\Core\Http\Request;
 use App\Core\Http\Response;
 use App\Models\F2FEvent;
 use App\Models\OnlineEvent;
+use App\Models\Event;
 
 class EventController extends Controller
 {
+    public function index() : void
+    {
+        $this->render('/events/index');
+    }
     public function create(Request $request, Response $response): void
     {
         $event = new F2FEvent();
@@ -17,7 +22,7 @@ class EventController extends Controller
             $data = $request->getBody();
             $data['capacity'] = (int)$data['capacity'];
             $data['price'] = (float)$data['price'];
-            $data['cityId'] = (int)$data['cityId'];
+            $data['cityId'] = isset($data['cityId']) ? (int)$data['cityId'] : null;
 
             // handle the image upload
             if (isset($_FILES['picture']) && !empty($_FILES['picture']['name'])) {
@@ -44,8 +49,9 @@ class EventController extends Controller
         $this->render('events/create', ['model' => $event, 'errors' => $event->getErrors()]);
     }
 
-    public function showEvents()
+    public function getAllEvents() : void
     {
-        $this->render('/events/index');
+        $events = Event::getAll();
+        echo json_encode($events);
     }
 }

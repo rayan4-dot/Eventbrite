@@ -19,6 +19,7 @@ $app->router->post('/register', [AuthController::class, 'register']);
 
 $app->router->get('/logout', [AuthController::class, 'logout']);
 
+//$app->router->get('/events', [EventController::class, 'index']);
 $app->router->get('/events/create', [EventController::class, 'create']);
 $app->router->post('/events/create', [EventController::class, 'create']);
 
@@ -31,3 +32,4 @@ $app->router->get('/api/regions', [RegionController::class, 'getAllRegions']);
 $app->router->get('/api/cities', [CityController::class, 'getRegionCities']);
 $app->router->get('/api/sponsors', [SponsorController::class, 'getAllSponsors']);
 $app->router->get('/api/sponsors', [SponsorController::class, 'create']);
+//$app->router->get('/api/events', [EventController::class, 'getAllEvents']);
