@@ -7,7 +7,7 @@
 
 {% block formContent %}
 
-    {% import 'macros/form.html.twig' as form %}
+    {% import 'macros/input.html.twig' as form %}
 
     {{ form.inputField('email', 'email', 'Email', model.email, '', model.errors) }}
     {{ form.inputField('password', 'password', 'Password', model.password, '', model.errors) }}

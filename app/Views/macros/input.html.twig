@@ -24,11 +24,12 @@
         <label class="label">
             <span class="text-gray-300 font-medium">{{ label }}</span>
         </label>
-        <input name="{{ name }}" type="{{ type }}" value="{{ value }}" class="input input-dark w-full {{ class }} {{ errors[name] ? 'border-red-500' : 'border-gray-300'}}"/>
+        <input name="{{ name }}" type="{{ type }}" value="{{ value }}"
+               class="input bg-gray-800 border-gray-700 text-white focus:border-orange-600 w-full {{ class }} {% if errors[name] is defined %}border-red-500{% else %}border-gray-300{% endif %}" />
+        {% if errors[name] is defined %}
+            <div class="text-red-500 text-sm mt-2">
+                {{ errors[name][0] }}
+            </div>
+        {% endif %}
     </div>
-    {% if errors[name] %}
-        <div class="text-red-500 text-sm mt-2">
-            {{ errors[name][0] }}
-        </div>
-    {% endif %}
 {% endmacro %}
