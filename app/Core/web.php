@@ -20,6 +20,7 @@ $app->router->post('/register', [AuthController::class, 'register']);
 $app->router->get('/logout', [AuthController::class, 'logout']);
 
 //$app->router->get('/events', [EventController::class, 'index']);
+$app->router->get('/events/{id}', [EventController::class, 'index']);
 $app->router->get('/events/create', [EventController::class, 'create']);
 $app->router->post('/events/create', [EventController::class, 'create']);
 
