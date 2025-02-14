@@ -24,3 +24,8 @@ $app->router->post('/events/create', [EventController::class, 'create']);
 $app->router->get('/admin/dashboard', [AdminController::class, 'dashboard']);
 $app->router->get('/admin/users', [AdminController::class, 'users']);
 $app->router->get('/admin/categories', [CategoryController::class, 'create']);
+$app->router->get('/admin/approve-user/{id}', [AdminController::class, 'approveUser']);
+$app->router->get('/admin/reject-user/{id}', [AdminController::class, 'rejectUser']);
+$app->router->post('/admin/block-user/{id}', [AdminController::class, 'blockUser']);
+$app->router->post('/admin/unblock-user/{id}', [AdminController::class, 'unblockUser']);
+

@@ -29,10 +29,18 @@ class Router
     public function resolve()
     {
         $path = $this->request->getPath();
+
         $method = $this->request->method();
         $callback = $this->routes[$method][$path] ?? false;
-        if(!$callback) {
-            return "Not Found";
+        if (!$callback) {
+            foreach ($this->routes[$method] as $route => $handler) {
+                $routePattern = preg_replace('/\{(\w+)\}/', '(\d+)', $route);
+                if (preg_match("#^$routePattern$#", $path, $matches)) {
+                    array_shift($matches);
+                    return call_user_func_array([new $handler[0], $handler[1]], $matches);
+                }
+            }
+            return "Not found";
         }
 
         if(is_string($callback)) {

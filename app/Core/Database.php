@@ -13,8 +13,6 @@ class Database
         }
         catch(\PDOException $e) {
             var_dump("Database connection error: " . $e->getMessage());
-
-            dump("Database connection error: " . $e->getMessage());
         }
     }
 
@@ -29,7 +27,7 @@ class Database
             $this->conn->exec($sql);
         }
         catch(\PDOException $e) {
-            dump($e->getMessage());
+            var_dump($e->getMessage());
         }
     }
 

@@ -1,24 +1,24 @@
 <?php
 
+
 namespace App\Core;
 
 abstract class DbModel extends Model
 {
-    abstract public function getTableName();
+    abstract public function getTableName();  
     abstract public function getAttributes();
 
     public function save()
     {
-        $table = $this->getTableName();
+        $table = $this->getTableName();  
         $attributes = $this->getAttributes();
         $columns = implode(',', $attributes);
         $placeholders = implode(',', array_fill(0, count($attributes), '?'));
         $sql = "INSERT INTO $table ($columns) VALUES ($placeholders);";
         $stmt = $this->prepare($sql);
         $values = [];
-        dump($attributes);
-        foreach($attributes as $attribute) {
-            dump($this->$attribute);
+
+        foreach ($attributes as $attribute) {
             $values[] = $this->{$attribute};
         }
         return $stmt->execute($values);
@@ -26,20 +26,28 @@ abstract class DbModel extends Model
 
     public static function findOne(array $where)
     {
-        $tableName = (new static)->getTableName();
+        $instance = new static();  
+        $tableName = $instance->getTableName(); 
         $attributes = array_keys($where);
         $sql = implode("AND ", array_map(fn($attr) => "$attr = :$attr", $attributes));
         $stmt = self::prepare("SELECT * FROM $tableName WHERE $sql");
-        foreach($where as $key => $item) {
+        foreach ($where as $key => $item) {
             $stmt->bindValue(":$key", $item);
         }
         $stmt->execute();
         return $stmt->fetchObject(static::class);
     }
-
-    public function getDb() : Database
+    
+    public static function findAll(): array
     {
-        return Application::$app->db;
+        $instance = new static();  
+        $sql = "SELECT * FROM " . $instance->getTableName();  
+        return self::findBySql($sql);
+    }
+
+    public function getDb()
+    {
+        return Application::$app->db->conn;
     }
 
     public static function prepare($sql)
@@ -47,4 +55,11 @@ abstract class DbModel extends Model
         return Application::$app->db->conn->prepare($sql);
     }
 
+    public static function findBySql($sql)
+    {
+        $stmt = self::prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+    }
 }
+

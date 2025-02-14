@@ -10,13 +10,13 @@ class Category extends DbModel
     public string $description = '';
     public function getTableName() : string
     {
-        // TODO: Implement getTableName() method.
+      
         return 'categories';
     }
 
     public function getAttributes() : array
     {
-        // TODO: Implement getAttributes() method.
+       
         return ['name', 'description'];
     }
 
