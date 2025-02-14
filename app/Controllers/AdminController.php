@@ -2,21 +2,17 @@
 
 namespace App\Controllers;
 
-use App\Core\Application;
 use App\Core\Controller;
-use App\Core\Http\Request;
-use App\Core\Http\Response;
-use App\Models\Login;
-use App\Models\User;
 
-
-class AdminController extends controller
+class AdminController extends Controller
 {
-
-    public function dashboard(Request $request)
+    public function dashboard() : void
     {
-
-        $this->render('admin/dashboard');
+        $this->render('/admin/dashboard');
     }
 
+    public function users() : void
+    {
+        $this->render('/admin/users');
+    }
 }

@@ -14,6 +14,7 @@ class Database
         catch(\PDOException $e) {
             var_dump("Database connection error: " . $e->getMessage());
 
+            dump("Database connection error: " . $e->getMessage());
         }
     }
 
@@ -54,9 +55,6 @@ class Database
         if(!empty($newMigrations)) {
             $this->saveMigration($newMigrations);
         }
-        // else {
-        //     echo "All migrations all applied";
-        // }
     }
 
     public function getAppliedMigrations() : array

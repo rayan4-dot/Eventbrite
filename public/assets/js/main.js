@@ -88,3 +88,61 @@ document.addEventListener('DOMContentLoaded', function () {
 
     updateCityCarousel();
 });
+
+
+document.addEventListener('DOMContentLoaded', (event) => {
+    const modal = document.getElementById('sponsorModal');
+    const openButton = document.getElementById('openSponsorModal');
+    const closeButton = document.getElementById('closeSponsorModal');
+    const addSponsorBtn = document.getElementById('addSponsorBtn');
+    const eventTypeSelect = document.getElementById('eventType');
+    const googleMeetSection = document.getElementById('googleMeetSection');
+    const citySection = document.getElementById('citySection');
+    const isPaidEventToggle = document.getElementById('isPaidEvent');
+    const pricingSection = document.getElementById('pricingSection');
+    const existingSponsorsSelect = document.getElementById('existingSponsors');
+
+    let sponsors = [];
+
+    eventTypeSelect.addEventListener('change', (e) => {
+        const isRemote = e.target.value === 'remote';
+        googleMeetSection.classList.toggle('hidden', !isRemote);
+        citySection.classList.toggle('hidden', isRemote);
+    });
+
+    isPaidEventToggle.addEventListener('change', (e) => {
+        pricingSection.classList.toggle('hidden', !e.target.checked);
+    });
+
+    openButton.addEventListener('click', () => modal.showModal());
+    closeButton.addEventListener('click', () => modal.close());
+
+    addSponsorBtn.addEventListener('click', () => {
+        const sponsorName = document.getElementById('sponsorName').value;
+        const sponsorLogo = document.getElementById('sponsorLogo').files[0];
+
+        if (sponsorName) {
+            sponsors.push({
+                name: sponsorName,
+                logo: sponsorLogo ? URL.createObjectURL(sponsorLogo) : null
+            });
+
+            updateSponsorsDropdown();
+
+            document.getElementById('sponsorName').value = '';
+            document.getElementById('sponsorLogo').value = '';
+
+            modal.close();
+        }
+    });
+
+    function updateSponsorsDropdown() {
+        existingSponsorsSelect.innerHTML = '<option disabled selected>Select Existing Sponsors</option>';
+        sponsors.forEach((sponsor, index) => {
+            const option = document.createElement('option');
+            option.value = index;
+            option.textContent = sponsor.name;
+            existingSponsorsSelect.appendChild(option);
+        });
+    }
+});

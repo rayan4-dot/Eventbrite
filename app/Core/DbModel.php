@@ -16,7 +16,9 @@ abstract class DbModel extends Model
         $sql = "INSERT INTO $table ($columns) VALUES ($placeholders);";
         $stmt = $this->prepare($sql);
         $values = [];
+        dump($attributes);
         foreach($attributes as $attribute) {
+            dump($this->$attribute);
             $values[] = $this->{$attribute};
         }
         return $stmt->execute($values);

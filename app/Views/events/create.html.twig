@@ -1,0 +1,211 @@
+{% extends 'layouts/main.html.twig' %}
+
+{% block title %}Create Event{% endblock %}
+
+{% block content %}
+
+    <div class="min-h-screen pt-24 px-4 md:px-8 pb-8">
+        <div class="max-w-4xl mx-auto bg-gray-800 rounded-xl shadow-xl p-6 md:p-8">
+            <!-- Add padding-top to account for fixed navbar -->
+            <div class="pt-20 min-h-screen p-4 md:p-8">
+                <div class="max-w-4xl mx-auto bg-gray-800 rounded-xl shadow-xl p-6 md:p-8">
+                    <div class="text-center mb-8">
+                        <h1 class="text-4xl font-bold text-white mb-2">Create Your Event</h1>
+                        <p class="text-gray-400">Share your event with the world</p>
+                    </div>
+
+                    <form id="eventForm" class="space-y-8" method="post" action="">
+                        <!-- Event Picture Upload -->
+                        <div class="relative group">
+                            <div class="border-2 border-dashed border-gray-600 rounded-lg p-8 text-center hover:border-orange-600 transition-colors bg-gray-900">
+                                <i class="fas fa-cloud-upload-alt text-4xl text-gray-400 mb-4"></i>
+                                <div class="space-y-2">
+                                    <label class="block text-sm font-medium text-gray-300">Event Picture</label>
+                                    <div class="text-xs text-gray-400">Drag and drop or click to upload</div>
+                                    <input type="file" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Event Title -->
+                        <div class="form-control">
+                            <label class="label">
+                                <span class="text-gray-300 font-medium">Event Title</span>
+                            </label>
+                            <input name="title" name="title" type="text" placeholder="Enter an engaging title for your event"
+                                   class="input bg-gray-800 border-gray-700 text-white w-full"/>
+                        </div>
+
+                        <!-- Event Details Grid -->
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <!-- Event Time -->
+                            <div class="form-control">
+                                <label class="label">
+                                    <span class="text-gray-300 font-medium">Event Date & Time</span>
+                                </label>
+                                <input name="eventDate" type="datetime-local"
+                                       class="input bg-gray-800 border-gray-700 text-white w-full"/>
+                            </div>
+
+                            <!-- Event Type -->
+                            <div class="form-control">
+                                <label for="eventType" class="label">
+                                    <span class="text-gray-300 font-medium">Event Type</span>
+                                </label>
+                                <select name="type"  id="eventType" class="select bg-gray-800 border-gray-700 text-white w-full">
+                                    <option disabled selected>Select Event Type</option>
+                                    <option value="face-to-face">Face to Face</option>
+                                    <option value="remote">Remote (Google Meet)</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- City Selection (for face-to-face) -->
+                        <div id="citySection" class="form-control hidden">
+                            <label for="city" class="label">
+                                <span class="text-gray-300 font-medium">City</span>
+                            </label>
+                            <select name="city" id="city" class="select bg-gray-800 border-gray-700 text-white w-full">
+                                <option disabled selected>Select a city</option>
+                                <option value="casablanca">Casablanca</option>
+                                <option value="rabat">Rabat</option>
+                                <option value="marrakech">Marrakech</option>
+                                <option value="tangier">Tangier</option>
+                                <option value="agadir">Agadir</option>
+                            </select>
+                        </div>
+
+                        <!-- Google Meet Link (for remote) -->
+                        <div id="googleMeetSection" class="form-control hidden">
+                            <label class="label">
+                                <span class="text-gray-300 font-medium">Google Meet Link</span>
+                            </label>
+                            <div class="relative">
+                                <i class="fas fa-video absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                                <input name="meetLink" type="url" placeholder="Enter Google Meet link"
+                                       class="input bg-gray-800 border-gray-700 text-white w-full pl-10"/>
+                            </div>
+                        </div>
+
+                        <!-- Event Description -->
+                        <div class="form-control">
+                            <label class="label">
+                                <span class="text-gray-300 font-medium">Event Description</span>
+                            </label>
+                            <textarea name="description" class="textarea bg-gray-800 border-gray-700 text-white h-32"
+                                      placeholder="Describe what makes your event special..."></textarea>
+                        </div>
+
+                        <!-- Number of Seats -->
+                        <div class="form-control">
+                            <label class="label">
+                                <span class="text-gray-300 font-medium">Number of Seats</span>
+                            </label>
+                            <div class="relative">
+                                <i class="fas fa-users absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                                <input name="seats" type="number" placeholder="Total seats"
+                                       class="input bg-gray-800 border-gray-700 text-white w-full pl-10" min="1"/>
+                            </div>
+                        </div>
+
+                        <!-- Pricing Toggle -->
+                        <div class="form-control bg-gray-900 p-4 rounded-lg">
+                            <label class="label cursor-pointer flex justify-between">
+                                <span class="text-gray-300 font-medium">Is this a paid event?</span>
+                                <input name="isPaid" id="isPaidEvent" type="checkbox" class="toggle toggle-primary"/>
+                            </label>
+                        </div>
+
+                        <!-- Price Range -->
+                        <div id="pricingSection" class="grid md:grid-cols-2 gap-6 hidden">
+                            <div class="form-control">
+                                <label class="label">
+                                    <span class="text-gray-300 font-medium">Price</span>
+                                </label>
+                                <div class="relative">
+                                    <i class="fas fa-tag absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                                    <input name="price" type="number" placeholder="Event price"
+                                           class="input bg-gray-800 border-gray-700 text-white w-full pl-10" min="0"
+                                           step="0.01"/>
+                                </div>
+                            </div>
+                            <div class="form-control">
+                                <label class="label">
+                                    <span class="text-gray-300 font-medium">Currency</span>
+                                </label>
+                                <select class="select bg-gray-800 border-gray-700 text-white w-full">
+                                    <option>USD ($)</option>
+                                    <option>EUR (€)</option>
+                                    <option>MAD (DH)</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Sponsors Section -->
+                        <div class="form-control bg-gray-900 p-6 rounded-lg">
+                            <label class="label">
+                                <span class="text-gray-300 font-medium">Event Sponsors</span>
+                            </label>
+                            <div class="flex flex-col md:flex-row items-start md:items-center gap-4">
+                                <button type="button" id="openSponsorModal"
+                                        class="btn bg-orange-600 hover:bg-orange-700 text-white border-none">
+                                    <i class="fas fa-plus mr-2"></i>Add Sponsor
+                                </button>
+                                <select id="existingSponsors"
+                                        class="select bg-gray-800 border-gray-700 text-white flex-grow">
+                                    <option disabled selected>Select Existing Sponsors</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <div class="form-control mt-8">
+                            <button type="submit" class="btn bg-orange-600 hover:bg-orange-700 text-white border-none h-12 text-lg w-full">
+                                Create Event
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Sponsor Modal -->
+            <dialog id="sponsorModal" class="modal">
+                <div class="modal-box bg-gray-800 text-white">
+                    <div class="flex justify-between items-center mb-6">
+                        <h3 class="font-bold text-xl">Add Sponsor</h3>
+                        <button id="closeSponsorModal" class="btn btn-ghost btn-circle text-gray-400">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <div class="space-y-6">
+                        <div class="form-control">
+                            <label class="label">
+                                <span class="text-gray-300 font-medium">Sponsor Logo</span>
+                            </label>
+                            <div class="border-2 border-dashed border-gray-600 rounded-lg p-6 text-center">
+                                <i class="fas fa-image text-3xl text-gray-400 mb-2"></i>
+                                <input type="file" id="sponsorLogo"
+                                       class="file-input file-input-bordered w-full bg-gray-800 border-gray-700"/>
+                            </div>
+                        </div>
+                        <div class="form-control">
+                            <label class="label">
+                                <span class="text-gray-300 font-medium">Sponsor Name</span>
+                            </label>
+                            <input type="text" id="sponsorName" placeholder="Enter sponsor name"
+                                   class="input bg-gray-800 border-gray-700 text-white w-full"/>
+                        </div>
+                        <div class="modal-action">
+                            <button id="addSponsorBtn"
+                                    class="btn bg-orange-600 hover:bg-orange-700 text-white border-none w-full">
+                                Add Sponsor
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </dialog>
+        </div>
+    </div>
+
+
+{% endblock %}

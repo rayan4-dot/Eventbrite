@@ -15,7 +15,8 @@ class Application
     public Router $router;
     public View $view;
     public Database $db;
-    public User $user;
+    public ?User $user;
+    public Session $session;
 
     public function __construct(string $root_path, array $config)
     {
@@ -27,6 +28,7 @@ class Application
         $this->view = new View;
         $this->db = new Database($config);
         $this->user = new User;
+        $this->session = new Session;
     }
 
     public function login(User $user) : bool
@@ -34,7 +36,14 @@ class Application
         $this->user = $user;
         $primaryKey = $user->primaryKey();
         $id = $user->{$primaryKey};
+        $this->session->set('user', $id);
         return true;
+    }
+
+    public function logout() : void
+    {
+        $this->user = null;
+        $this->session->remove('user');
     }
 
     public function run() : void
