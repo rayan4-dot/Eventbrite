@@ -23,7 +23,7 @@ class User extends DbModel
         return ['firstName', 'lastName', 'email', 'password', 'role_id'];
     }
 
-    public function primaryKey() : string
+    public function getPrimaryKey() : string
     {
         return 'id';
     }

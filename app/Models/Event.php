@@ -23,6 +23,13 @@ abstract class Event extends DbModel
         return 'events';
     }
 
+    public function getPrimaryKey() : string
+    {
+        // TODO: Implement getPrimaryKey() method.
+        return 'id';
+    }
+
+
     public function rules() : array
     {
         return [

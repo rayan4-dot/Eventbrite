@@ -14,6 +14,13 @@ class Category extends DbModel
         return 'categories';
     }
 
+    public function getPrimaryKey()
+    {
+        // TODO: Implement getPrimaryKey() method.
+        return 'id';
+    }
+
+
     public function getAttributes() : array
     {
         // TODO: Implement getAttributes() method.

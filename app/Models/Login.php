@@ -19,6 +19,13 @@ class Login extends DbModel
         return ['email', 'password'];
     }
 
+    public function getPrimaryKey()
+    {
+        // TODO: Implement getPrimaryKey() method.
+        return 'id';
+    }
+
+
     public function rules() : array
     {
         return [

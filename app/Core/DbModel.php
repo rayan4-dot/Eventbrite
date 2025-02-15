@@ -6,6 +6,7 @@ abstract class DbModel extends Model
 {
     abstract public function getTableName();
     abstract public function getAttributes();
+    abstract public function getPrimaryKey();
 
     public function save()
     {
@@ -56,6 +57,32 @@ abstract class DbModel extends Model
 
         $stmt->execute();
         return $stmt->fetchAll(\PDO::FETCH_CLASS, static::class);
+    }
+
+    public function update()
+    {
+        $table = $this->getTableName();
+        $attributes = $this->getAttributes();
+        $primaryKey = $this->getPrimaryKey(); // Add this abstract method
+
+        // Remove primary key from attributes to update
+        $attributesToUpdate = array_filter($attributes, fn($attr) => $attr !== $primaryKey);
+
+        $setStatements = implode(', ', array_map(fn($attr) => "$attr = ?", $attributesToUpdate));
+
+        $sql = "UPDATE $table SET $setStatements WHERE $primaryKey = ?";
+        $stmt = $this->prepare($sql);
+
+        // Get values for SET parameters
+        $values = [];
+        foreach ($attributesToUpdate as $attribute) {
+            $values[] = $this->{$attribute};
+        }
+
+        // Add primary key value for WHERE clause
+        $values[] = $this->{$primaryKey};
+
+        return $stmt->execute($values);
     }
 
     public function getDb() : Database
