@@ -55,7 +55,6 @@ class Validator
                 }
             }
         }
-//        dump($this->errors); die;
         return empty($this->errors);
     }
 

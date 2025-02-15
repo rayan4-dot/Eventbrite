@@ -1,5 +1,7 @@
 <?php
 
+// CategoryController.php
+
 namespace App\Controllers;
 
 use App\Core\Application;
@@ -98,4 +100,5 @@ class CategoryController extends Controller
         header('Content-Type: application/json');
         echo json_encode($categories);
     }
+
 }
