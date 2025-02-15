@@ -2,6 +2,8 @@
 
 namespace App\Core;
 
+use App\Core\Application;
+
 abstract class DbModel extends Model
 {
     abstract public function getTableName();
@@ -60,7 +62,7 @@ abstract class DbModel extends Model
         return $stmt->fetchObject(static::class);
     }
 
-    public function getDb(): Database
+    public function getDb()
     {
         return Application::$app->db;
     }
