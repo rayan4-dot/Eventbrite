@@ -6,6 +6,7 @@ abstract class DbModel extends Model
 {
     abstract public function getTableName();
     abstract public function getAttributes();
+    abstract public function getPrimaryKey();
 
     public function save()
     {
@@ -59,6 +60,56 @@ abstract class DbModel extends Model
         $stmt->execute();
         return $stmt->fetchObject(static::class);
     }
+
+    public static function getAll() : array
+    {
+        $tableName = (new static)->getTableName();
+        $stmt = self::prepare("SELECT * FROM $tableName");
+        $stmt->execute();
+        return $stmt->fetchAll(\PDO::FETCH_CLASS, static::class);
+    }
+
+    public static function find(array $conditions): array
+    {
+        $tableName = (new static)->getTableName();
+        $attributes = array_keys($conditions);
+        $sql = implode(" AND ", array_map(fn($attr) => "$attr = :$attr", $attributes));
+        $stmt = self::prepare("SELECT * FROM $tableName WHERE $sql");
+
+        foreach ($conditions as $key => $value) {
+            $stmt->bindValue(":$key", $value);
+        }
+
+        $stmt->execute();
+        return $stmt->fetchAll(\PDO::FETCH_CLASS, static::class);
+    }
+
+    public function update()
+    {
+        $table = $this->getTableName();
+        $attributes = $this->getAttributes();
+        $primaryKey = $this->getPrimaryKey(); // Add this abstract method
+
+        // Remove primary key from attributes to update
+        $attributesToUpdate = array_filter($attributes, fn($attr) => $attr !== $primaryKey);
+
+        $setStatements = implode(', ', array_map(fn($attr) => "$attr = ?", $attributesToUpdate));
+
+        $sql = "UPDATE $table SET $setStatements WHERE $primaryKey = ?";
+        $stmt = $this->prepare($sql);
+
+        // Get values for SET parameters
+        $values = [];
+        foreach ($attributesToUpdate as $attribute) {
+            $values[] = $this->{$attribute};
+        }
+
+        // Add primary key value for WHERE clause
+        $values[] = $this->{$primaryKey};
+
+        return $stmt->execute($values);
+    }
+
 
     public function getDb(): Database
     {

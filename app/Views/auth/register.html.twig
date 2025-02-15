@@ -8,7 +8,7 @@
 
 {% block formContent %}
 
-{% import 'macros/form.html.twig' as form %}
+{% import 'macros/input.html.twig' as form %}
 
     {{ form.inputField('firstName', 'text', 'First Name', model.firstName, '', model.errors) }}
     {{ form.inputField('lastName', 'text', 'Last Name', model.lastName, '', model.errors) }}
