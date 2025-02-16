@@ -31,53 +31,53 @@ class AdminController extends Controller
 
     public function approveUser($id)
     {
-        $userAsked = UsersAsked::findOne(['id' => $id]);
-        if ($userAsked) {
-            $user = new User();
-            $user->firstName = $userAsked->first_name;
-            $user->lastName = $userAsked->last_name;
-            $user->email = $userAsked->email;
-            $user->role_id = 3; 
-            $user->save(); 
-        
-            $userAsked->delete($userAsked->id);
-    
+        $user = User::findOne(['id' => $id]);
+        if ($user) {
+            $user->approve();
+
             $notify = new NotificationController();
-            $subject = 'Your Account Has Been Approved';
-            $body = 'Dear ' . $user->email . ', <br>Your account on Eventbite has been approved as an organizer!';
-            $notify->sendEmail($user->email, $subject, $body);
-    
+            $subject = 'Your Account Has Been approved';
+
+            $body = 'Dear ' . $user->email . ', <br>';
+            $body .= 'Congratulations Your account on Eventbite has been approved By Admin,!<br>';
+            $body .= 'Good luck,<br>The Eventbite Team';
+
+            $userEmail = $user->email;
+            $notify->sendEmail($userEmail, $subject, $body);
+
+            $response->redirect('/admin/users');
+
             $this->redirect('/admin/users');
         }
     }
 
     public function rejectUser($id)
     {
-        $userAsked = UsersAsked::findOne(['id' => $id]);
-        if ($userAsked) {
-          
-            $user = new User();
-            $user->firstName = $userAsked->first_name;
-            $user->lastName = $userAsked->last_name;
-            $user->email = $userAsked->email;
-            $user->role_id = 2; 
-            $user->save();
-            
-            $userAsked->delete($userAsked->id);
-    
+        $user = User::findOne(['id' => $id]);
+        if ($user) {
+            $user->reject();
+
             $notify = new NotificationController();
-            $subject = 'Your Account Request Has Been Rejected';
-            $body = 'Dear ' . $user->email . ', <br>Your request to become an organizer has been rejected. You will remain a regular user.';
-            $notify->sendEmail($user->email, $subject, $body);
-    
+            $subject = 'Your Account Has Been blocked';
+
+            $body = 'Dear ' . $user->email . ', <br>';
+            $body .= 'Your account on Eventbite to be orginizer has been rejected By Admin!<br>';
+            $body .= 'we are sorry about so .<br>';
+            $body .= 'Good luck,<br>The Eventbite Team';
+
+            $userEmail = $user->email;
+            $notify->sendEmail($userEmail, $subject, $body);
+
+            $response->redirect('/admin/users');
+
             $this->redirect('/admin/users');
         }
-    }
-    
 
-    public function blockUser(Request $request ,Response $response ,$params)
+    }
+
+    public function blockUser($id)
     {
-        $id = $params[0];
+        $response = new Response();
         $user = User::findOne(['id' => (int)$id]);
         if ($user) {
             $user->block(); 
@@ -97,7 +97,7 @@ class AdminController extends Controller
         }
     }
 
-    public function unblockUser(Request $request ,Response $response ,$params)
+    public function unblockUser($id)
     {
         $response = new Response();
         $user = User::findOne(['id' => (int)$id]);
