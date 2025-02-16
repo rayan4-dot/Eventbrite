@@ -2,6 +2,11 @@
 
 {% block title %}Create Event{% endblock %}
 
+{% import 'macros/input.html.twig' as input %}
+{% import 'macros/selectField.html.twig' as select %}
+{% import 'macros/picture.html.twig' as picture %}
+{% import 'macros/textArea.html.twig' as textarea %}
+
 {% block content %}
 
     <div class="min-h-screen pt-24 px-4 md:px-8 pb-8">
@@ -14,66 +19,62 @@
                         <p class="text-gray-400">Share your event with the world</p>
                     </div>
 
-                    <form id="eventForm" class="space-y-8" method="post" action="">
+                    <form id="eventForm" class="space-y-8" method="post" action="" enctype="multipart/form-data">
                         <!-- Event Picture Upload -->
-                        <div class="relative group">
-                            <div class="border-2 border-dashed border-gray-600 rounded-lg p-8 text-center hover:border-orange-600 transition-colors bg-gray-900">
-                                <i class="fas fa-cloud-upload-alt text-4xl text-gray-400 mb-4"></i>
-                                <div class="space-y-2">
-                                    <label class="block text-sm font-medium text-gray-300">Event Picture</label>
-                                    <div class="text-xs text-gray-400">Drag and drop or click to upload</div>
-                                    <input type="file" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer"/>
-                                </div>
-                            </div>
-                        </div>
+                        {{ picture.pictureField('Event Picture', 'picture', errors) }}
 
                         <!-- Event Title -->
-                        <div class="form-control">
-                            <label class="label">
-                                <span class="text-gray-300 font-medium">Event Title</span>
-                            </label>
-                            <input name="title" name="title" type="text" placeholder="Enter an engaging title for your event"
-                                   class="input bg-gray-800 border-gray-700 text-white w-full"/>
-                        </div>
+                        {{ input.inputField('title', 'text', 'Event Title', model.title, '', errors) }}
+
+
+                        <!-- Event Category -->
+                        {{ select.selectField('categoryId', 'category-field', 'Event Category', model.title, options, '', errors) }}
 
                         <!-- Event Details Grid -->
                         <div class="grid md:grid-cols-2 gap-6">
                             <!-- Event Time -->
-                            <div class="form-control">
-                                <label class="label">
-                                    <span class="text-gray-300 font-medium">Event Date & Time</span>
-                                </label>
-                                <input name="eventDate" type="datetime-local"
-                                       class="input bg-gray-800 border-gray-700 text-white w-full"/>
-                            </div>
+                            {{ input.inputField('eventDate', 'date', 'Event Date', model.eventDate, '', errors) }}
 
                             <!-- Event Type -->
-                            <div class="form-control">
-                                <label for="eventType" class="label">
-                                    <span class="text-gray-300 font-medium">Event Type</span>
-                                </label>
-                                <select name="type"  id="eventType" class="select bg-gray-800 border-gray-700 text-white w-full">
-                                    <option disabled selected>Select Event Type</option>
-                                    <option value="face-to-face">Face to Face</option>
-                                    <option value="remote">Remote (Google Meet)</option>
-                                </select>
-                            </div>
+                            {{ select.selectField('type', 'eventType', 'Event Type', model.type, {'Face To Face': 'f2f', 'Online': 'online'}, '', errors) }}
+
                         </div>
 
                         <!-- City Selection (for face-to-face) -->
-                        <div id="citySection" class="form-control hidden">
-                            <label for="city" class="label">
-                                <span class="text-gray-300 font-medium">City</span>
-                            </label>
-                            <select name="city" id="city" class="select bg-gray-800 border-gray-700 text-white w-full">
-                                <option disabled selected>Select a city</option>
-                                <option value="casablanca">Casablanca</option>
-                                <option value="rabat">Rabat</option>
-                                <option value="marrakech">Marrakech</option>
-                                <option value="tangier">Tangier</option>
-                                <option value="agadir">Agadir</option>
-                            </select>
+                        <div id="f2fEvent" class="hidden">
+                            <div class="grid md:grid-cols-2 gap-6">
+                                <div id="regionSection" class="form-control">
+                                    <label for="region" class="label">
+                                        <span class="text-gray-300 font-medium">Region</span>
+                                    </label>
+                                    <select name="region" id="region"
+                                            class="select bg-gray-800 border-gray-700 text-white w-full">
+                                        <option disabled selected>Select a Region</option>
+                                    </select>
+                                </div>
+                                <div id="citySection" class="form-control">
+                                    <label for="city" class="label">
+                                        <span class="text-gray-300 font-medium">City</span>
+                                    </label>
+                                    <select name="cityId" id="city"
+                                            class="select bg-gray-800 border-gray-700 text-white w-full">
+                                        <option disabled selected>Select a city</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-control">
+                                <label class="label">
+                                    <span class="text-gray-300 font-medium">Location</span>
+                                </label>
+                                <div class="relative">
+                                    <i class=""></i>
+                                    <input name="location" type="text" placeholder="Enter Event Location"
+                                           class="input bg-gray-800 border-gray-700 text-white w-full pl-10"/>
+                                </div>
+                            </div>
                         </div>
+
 
                         <!-- Google Meet Link (for remote) -->
                         <div id="googleMeetSection" class="form-control hidden">
@@ -88,25 +89,11 @@
                         </div>
 
                         <!-- Event Description -->
-                        <div class="form-control">
-                            <label class="label">
-                                <span class="text-gray-300 font-medium">Event Description</span>
-                            </label>
-                            <textarea name="description" class="textarea bg-gray-800 border-gray-700 text-white h-32"
-                                      placeholder="Describe what makes your event special..."></textarea>
-                        </div>
+                        {{ textarea.textArea('description', 'Event Description', model.description, errors) }}
 
                         <!-- Number of Seats -->
-                        <div class="form-control">
-                            <label class="label">
-                                <span class="text-gray-300 font-medium">Number of Seats</span>
-                            </label>
-                            <div class="relative">
-                                <i class="fas fa-users absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
-                                <input name="seats" type="number" placeholder="Total seats"
-                                       class="input bg-gray-800 border-gray-700 text-white w-full pl-10" min="1"/>
-                            </div>
-                        </div>
+                        {{ input.inputField('capacity', 'number', 'Number of Seats', model.seats, '', errors) }}
+
 
                         <!-- Pricing Toggle -->
                         <div class="form-control bg-gray-900 p-4 rounded-lg">
@@ -134,8 +121,8 @@
                                     <span class="text-gray-300 font-medium">Currency</span>
                                 </label>
                                 <select class="select bg-gray-800 border-gray-700 text-white w-full">
-                                    <option>USD ($)</option>
-                                    <option>EUR (€)</option>
+{#                                    <option>USD ($)</option>#}
+{#                                    <option>EUR (€)</option>#}
                                     <option>MAD (DH)</option>
                                 </select>
                             </div>
@@ -152,7 +139,7 @@
                                     <i class="fas fa-plus mr-2"></i>Add Sponsor
                                 </button>
                                 <select id="existingSponsors"
-                                        class="select bg-gray-800 border-gray-700 text-white flex-grow">
+                                        class="select bg-gray-800 border-gray-700 text-white flex-grow" multiple>
                                     <option disabled selected>Select Existing Sponsors</option>
                                 </select>
                             </div>
@@ -160,7 +147,8 @@
 
                         <!-- Submit Button -->
                         <div class="form-control mt-8">
-                            <button type="submit" class="btn bg-orange-600 hover:bg-orange-700 text-white border-none h-12 text-lg w-full">
+                            <button type="submit"
+                                    class="btn bg-orange-600 hover:bg-orange-700 text-white border-none h-12 text-lg w-full">
                                 Create Event
                             </button>
                         </div>
@@ -190,7 +178,7 @@
                         </div>
                         <div class="form-control">
                             <label class="label">
-                                <span class="text-gray-300 font-medium">Sponsor Name</span>
+                                <span class="text-gray-300 font-medi    um">Sponsor Name</span>
                             </label>
                             <input type="text" id="sponsorName" placeholder="Enter sponsor name"
                                    class="input bg-gray-800 border-gray-700 text-white w-full"/>
@@ -208,4 +196,9 @@
     </div>
 
 
+{% endblock %}
+
+{% block scripts %}
+    <script src="/assets/js/script.js"></script>
+    <script src="/assets/js/main.js"></script>
 {% endblock %}

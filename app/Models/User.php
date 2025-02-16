@@ -30,7 +30,7 @@ class User extends DbModel
         return ['id', 'firstName', 'lastName', 'email', 'password', 'role_id', 'status'];
     }
 
-    public function primaryKey() : string
+    public function getPrimaryKey() : string
     {
         return 'id';
     }
@@ -40,8 +40,8 @@ class User extends DbModel
         return [
             "firstName" => [$this->validator::RULE_REQUIRED],
             "lastName" => [$this->validator::RULE_REQUIRED],
-            "email" => [$this->validator::RULE_REQUIRED, $this->validator::RULE_EMAIL],
-            "password" => [$this->validator::RULE_REQUIRED],
+            "email" => [$this->validator::RULE_REQUIRED, $this->validator::RULE_EMAIL, [$this->validator::RULE_UNIQUE, 'class' => self::class]],
+            "password" => [$this->validator::RULE_REQUIRED, [$this->validator::RULE_MIN, 'min' => 6], [$this->validator::RULE_MAX, 'max' => 16]],
             "confirmPassword" => [$this->validator::RULE_REQUIRED, [$this->validator::RULE_MATCH, 'match' => 'password']],
         ];
     }

@@ -1,0 +1,15 @@
+{% macro textArea(name, label, value, errors = null) %}
+
+<div class="form-control">
+    <label class="label">
+        <span class="text-gray-300 font-medium">{{ label }}</span>
+    </label>
+    <textarea name="{{ name }}" class="textarea bg-gray-800 focus:border-orange-600 border-gray-700 text-white h-32 {% if errors[name] is defined %}border-red-500{% else %}border-gray-300{% endif %}"
+              placeholder="Describe what makes your event special..."></textarea>
+    {% if errors[name] is not empty %}
+        <div class="text-red-500 text-sm mt-1">{{ errors[name][0] }}</div>
+    {% endif %}
+</div>
+{% endmacro %}
+
+
