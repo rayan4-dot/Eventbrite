@@ -23,21 +23,6 @@ abstract class DbModel extends Model
         return $stmt->execute($values); 
     }
 
-    public function update(int $id, array $data): bool
-    {
-        $table = $this->getTableName();
-        $columns = array_keys($data);
-        $setClause = implode(', ', array_map(fn($col) => "$col = :$col", $columns));
-        $sql = "UPDATE $table SET $setClause WHERE id = :id";
-        $stmt = self::prepare($sql);
-
-        foreach ($data as $key => $value) {
-            $stmt->bindValue(":$key", $value);
-        }
-        $stmt->bindValue(":id", $id);
-        return $stmt->execute();
-    }
-
     public function delete(int $id): bool
     {
         $table = $this->getTableName();
