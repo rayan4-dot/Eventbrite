@@ -52,8 +52,9 @@ abstract class DbModel extends Model
     {
         $tableName = (new static())->getTableName();
         $attributes = array_keys($where);
+        $columns = implode(",",(new static())->getAttributes());
         $sql = implode(" AND ", array_map(fn($attr) => "$attr = :$attr", $attributes));
-        $stmt = self::prepare("SELECT * FROM $tableName WHERE $sql");
+        $stmt = self::prepare("SELECT     $columns  FROM $tableName WHERE $sql");
         foreach ($where as $key => $item) {
             $stmt->bindValue(":$key", $item);
         }

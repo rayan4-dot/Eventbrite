@@ -4,7 +4,6 @@
 
 {% block content %}
     <div class="p-6 space-y-8">
-  
         <div class="bg-gray-800 rounded-lg shadow-lg border border-gray-700">
             <div class="px-6 py-4 border-b border-gray-700">
                 <h2 class="text-lg font-semibold text-white">Pending Organizer Requests</h2>
@@ -45,7 +44,6 @@
             </table>
         </div>
 
- 
         <div class="bg-gray-800 rounded-lg shadow-lg border border-gray-700 mt-8">
             <div class="px-6 py-4 border-b border-gray-700">
                 <h2 class="text-lg font-semibold text-white">All Users</h2>
@@ -53,7 +51,8 @@
             <table class="w-full">
                 <thead>
                     <tr class="border-b border-gray-700">
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">User</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Profile</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Name</th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Email</th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Status</th>
                         <th class="px-6 py-3 text-right text-xs font-medium text-gray-400 uppercase tracking-wider">Actions</th>
@@ -63,12 +62,10 @@
                     {% for user in users %}
                         <tr class="hover:bg-gray-700/50">
                             <td class="px-6 py-4 whitespace-nowrap">
-                                <div class="flex items-center">
-                                    <img src="/api/placeholder/40/40" alt="" class="h-10 w-10 rounded-full">
-                                    <div class="ml-4">
-                                        <div class="text-sm font-medium text-white">{{ user.first_name }} {{ user.last_name }}</div>
-                                    </div>
-                                </div>
+                                <img src="/api/placeholder/40/40" alt="" class="h-10 w-10 rounded-full">
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="text-sm font-medium text-white">{{ user.firstname }}</div>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-400">{{ user.email }}</td>
                             <td class="px-6 py-4 whitespace-nowrap">
@@ -93,44 +90,6 @@
             </table>
         </div>
     </div>
-     <script>
-// document.addEventListener('DOMContentLoaded', function() {
-//     function handleAction(event, action, userId) {
-//         event.preventDefault();  
-        
-//         let data = new FormData();
-//         data.append('id', userId);  
-//         fetch(`/admin/${action}-user/${userId}`, {
-//             method: 'POST',
-//             body: data
-//         })
-//         .then(response => response.json())
-//         .then(data => {
-//             if (data.success) {
-//                 console.log(data);
-//                 alert(`${action.charAt(0).toUpperCase() + action.slice(1)} successful!`);
-//                 location.reload(); 
-//             } else {
-//                 alert(`${action.charAt(0).toUpperCase() + action.slice(1)} failed.`);
-//             }
-//         })
-//         .catch(error => {
-//             // console.error('Error:', error);
-//             alert('An error occurred. Please check the console for more details.');
-//         });
-//     }
-
-//     document.querySelectorAll('.block-btn').forEach(button => {
-//         button.addEventListener('click', function(event) {
-//             handleAction(event, 'block', this.dataset.userId);
-//         });
-//     });
-
-//     document.querySelectorAll('.unblock-btn').forEach(button => {
-//         button.addEventListener('click', function(event) {
-//             handleAction(event, 'unblock', this.dataset.userId);
-//         });
-//     });
-// });
- </script>
+    <script>
+    </script>
 {% endblock %}

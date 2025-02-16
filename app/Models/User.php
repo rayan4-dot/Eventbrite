@@ -1,5 +1,6 @@
 <?php
 
+
 namespace App\Models;
 
 use App\Core\DbModel;
@@ -7,16 +8,17 @@ use App\Core\Application;
 
 class User extends DbModel
 {
-    public int $id;
+    public int $id = 0;
     public string $firstname = '';
     public string $lastname = '';
     public string $email = '';
     public string $password = '';
-    public string $confirmpassword = '';
-    public string $created_at;
-    public string $status;
-    public string $block_status;
-    public int $role_id = 2;
+    public string $confirmPassword = '';
+    public string $created_at = '';
+    public string $status = '';
+    public string $block_status = '';
+    public int $role_id = 1;
+
 
     public function getTableName() : string
     {
@@ -25,7 +27,7 @@ class User extends DbModel
 
     public function getAttributes() : array
     {
-        return ['firstName', 'lastName', 'email', 'password', 'role_id'];
+        return ['id', 'firstName', 'lastName', 'email', 'password', 'role_id', 'status'];
     }
 
     public function primaryKey() : string
@@ -70,25 +72,24 @@ class User extends DbModel
 
     public function block(): bool
     {
-        $query = $this->getDb();
-        $sql = "UPDATE " . $this->getTableName() . " SET status = :status WHERE id = :id";
-        $stmt = $query->prepare($sql);
-        $stmt->execute(['status' => 'blocked', 'id' => $this->id]);
-        return true;
+      
+        if ($this->id) {
+            $sql = "UPDATE " . $this->getTableName() . " SET status = :status WHERE id = :id";
+            $stmt = $this->getDb()->prepare($sql);
+            return $stmt->execute(['status' => 'blocked', 'id' => $this->id]);
+        }
+        return false; 
     }
 
     public function unblock(): bool
     {
         $query = $this->getDb();
-
         $sql = "UPDATE " . $this->getTableName() . " SET status = :status WHERE id = :id";
         $stmt = $query->prepare($sql);
         try {
-        
-            $stmt->execute(['status' =>  'active', 'id' => $this->id]);
+            $stmt->execute(['status' => 'active', 'id' => $this->id]);
             return true;
         } catch (\PDOException $e) {
-           
             echo "error: " . $e->getMessage();
             return false;
         }

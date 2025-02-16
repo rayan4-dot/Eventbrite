@@ -22,29 +22,57 @@ class AdminController extends Controller
   
         $askedUsers = UsersAsked::findAll();
         $users = User::findAll();
-   
+
         $this->render('/admin/users', [
             'askedUsers' => $askedUsers,
             'users' => $users
         ]);
     }
 
-    public function approveUser(Request $request, Response $response)
+    public function approveUser($id)
     {
-        $user = User::findOne(['id' => $request->getParams('id')]);
+        $user = User::findOne(['id' => $id]);
         if ($user) {
             $user->approve();
+
+            $notify = new NotificationController();
+            $subject = 'Your Account Has Been approved';
+
+            $body = 'Dear ' . $user->email . ', <br>';
+            $body .= 'Congratulations Your account on Eventbite has been approved By Admin,!<br>';
+            $body .= 'Good luck,<br>The Eventbite Team';
+
+            $userEmail = $user->email;
+            $notify->sendEmail($userEmail, $subject, $body);
+
+            $response->redirect('/admin/users');
+
             $this->redirect('/admin/users');
         }
     }
 
-    public function rejectUser(Request $request, Response $response)
+    public function rejectUser($id)
     {
-        $user = User::findOne(['id' => $request->getParams('id')]);
+        $user = User::findOne(['id' => $id]);
         if ($user) {
             $user->reject();
+
+            $notify = new NotificationController();
+            $subject = 'Your Account Has Been blocked';
+
+            $body = 'Dear ' . $user->email . ', <br>';
+            $body .= 'Your account on Eventbite to be orginizer has been rejected By Admin!<br>';
+            $body .= 'we are sorry about so .<br>';
+            $body .= 'Good luck,<br>The Eventbite Team';
+
+            $userEmail = $user->email;
+            $notify->sendEmail($userEmail, $subject, $body);
+
+            $response->redirect('/admin/users');
+
             $this->redirect('/admin/users');
         }
+
     }
 
     public function blockUser($id)
@@ -58,12 +86,12 @@ class AdminController extends Controller
             $subject = 'Your Account Has Been blocked';
 
             $body = 'Dear ' . $user->email . ', <br>';
-            $body .= 'Your account on Eventbite has been blocked By Admins!<br>';
+            $body .= 'Your account on Eventbite has been blocked By Admin!<br>';
             $body .= 'we are sorry about so .<br>';
             $body .= 'Good luck,<br>The Eventbite Team';
 
             $userEmail = $user->email;
-            $notify->NotifyWhileblocked($userEmail, $subject, $body);
+            $notify->sendEmail($userEmail, $subject, $body);
 
             $response->redirect('/admin/users');
         }
@@ -73,24 +101,24 @@ class AdminController extends Controller
     {
         $response = new Response();
         $user = User::findOne(['id' => (int)$id]);
-        
+
         if ($user) {
             
             $user->unblock();
-    
             
             $notify = new NotificationController();
             $subject = 'Your Account Has Been Unblocked';
             
           
             $body = 'Dear ' . $user->email . ', <br>';
-            $body .= 'Your account on Eventbite has been unblocked!<br>';
+            $body .= 'Your account on Eventbite has been unblocked by admin!<br>';
             $body .= 'Thank you for your loyalty.<br>';
             $body .= 'Best regards,<br>The Eventbite Team';
     
            
             $userEmail = $user->email;
-            $notify->NotifyWhileUnblocked($userEmail, $subject, $body);
+          
+            $notify->sendEmail($userEmail, $subject, $body);
     
          
             $response->redirect('/admin/users');
