@@ -23,7 +23,7 @@ class AdminController extends Controller
   
         $askedUsers = UsersAsked::getAll();
         $users = User::getAll();
-        
+
 
         $this->render('/admin/users', [
             'askedUsers' => $askedUsers,
