@@ -21,7 +21,11 @@ class UsersAsked extends DbModel
 
     public function getAttributes() : array
     {
-        return ['user_id', 'email', 'first_name', 'last_name'];
+        return ['id','user_id', 'email', 'first_name', 'last_name','requested_at'];
+    }
+
+    public function getPrimaryKey(){
+        
     }
 
   
