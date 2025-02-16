@@ -7,7 +7,6 @@ use App\Models\UsersAsked;
 use App\Core\Controller;
 use App\Core\Http\Response;
 use App\Controllers\NotificationController;
-use App\Core\Http\Request;
 
 class AdminController extends Controller 
 {
@@ -21,9 +20,8 @@ class AdminController extends Controller
     public function users() : void
     {
   
-        $askedUsers = UsersAsked::getAll();
-        $users = User::getAll();
-
+        $askedUsers = UsersAsked::findAll();
+        $users = User::findAll();
 
         $this->render('/admin/users', [
             'askedUsers' => $askedUsers,
@@ -101,7 +99,7 @@ class AdminController extends Controller
 
     public function unblockUser(Request $request ,Response $response ,$params)
     {
-        $id = $params[0];
+        $response = new Response();
         $user = User::findOne(['id' => (int)$id]);
 
         if ($user) {
