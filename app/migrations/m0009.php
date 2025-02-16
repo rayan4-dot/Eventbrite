@@ -10,6 +10,7 @@ class m0009
     {
         $db = Application::$app->db->conn;
         $db->exec("CREATE TYPE status AS ENUM('draft', 'published');");
+        $db->exec("CREATE TYPE type AS ENUM('f2f', 'online');");
         $db->exec("CREATE TABLE IF NOT EXISTS events (
             id SERIAL PRIMARY KEY,
             title TEXT NOT NULL,
@@ -18,6 +19,7 @@ class m0009
             organiserId INTEGER,
             picture TEXT,
             price NUMERIC,
+            type type,
             cityId INTEGER,
             location TEXT,
             meetLink TEXT,

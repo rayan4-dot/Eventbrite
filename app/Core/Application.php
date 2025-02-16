@@ -34,7 +34,7 @@ class Application
     public function login(User $user) : bool
     {
         $this->user = $user;
-        $primaryKey = $user->primaryKey();
+        $primaryKey = $user->getPrimaryKey();
         $id = $user->{$primaryKey};
         $this->session->set('user', $id);
         return true;

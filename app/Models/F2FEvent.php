@@ -5,12 +5,12 @@ namespace App\Models;
 class F2FEvent extends Event
 {
     public ?int $cityId;
-    public string $location = '';
+    public ?string $location = '';
 
     public function getAttributes() : array
     {
         // TODO: Implement getAttributes() method.
-        return ['title', 'picture', 'categoryId', 'description', 'eventDate', 'price', 'capacity', 'cityId', 'location'];
+        return ['title', 'picture', 'categoryId', 'description', 'eventDate', 'price', 'capacity', 'type', 'cityId', 'location'];
     }
 
     public function rules() : array
