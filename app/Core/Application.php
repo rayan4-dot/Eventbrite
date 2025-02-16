@@ -46,8 +46,21 @@ class Application
         $this->session->remove('user');
     }
 
+
     public function run() : void
     {
+        if (session_status() === PHP_SESSION_NONE ) {  //define('PHP_SESSION_NONE', 1)
+            session_start();
+        }
+    
+        $authMiddleware = new \App\Core\Middlewares\AuthMiddleware(
+            // ['/events/create', '/dashboard'], // general protected routes
+            ['/admin/dashboard', '/admin/users', '/admin/categories'] // admin protected routes
+        );
+    
+        $authMiddleware->handle();
         echo $this->router->resolve();
     }
+    
+
 }
