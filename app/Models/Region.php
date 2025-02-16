@@ -19,6 +19,12 @@ class Region extends DbModel
         return ['name'];
     }
 
+    public function getPrimaryKey() : string
+    {
+        // TODO: Implement getPrimaryKey() method.
+        return 'id';
+    }
+
     function rules(): array
     {
         // TODO: Implement rules() method.

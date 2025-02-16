@@ -20,6 +20,12 @@ class City extends DbModel
         return ['name', 'regionId'];
     }
 
+    public function getPrimaryKey() : string
+    {
+        // TODO: Implement getPrimaryKey() method.
+        return 'id';
+    }
+
     function rules(): array
     {
         // TODO: Implement rules() method.

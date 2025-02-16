@@ -1,0 +1,187 @@
+{% extends 'layouts/main.html.twig' %}
+
+{% block title %}{% endblock %}
+
+{% block content %}
+    <!-- Event Header -->
+
+    <div id="eventDetails" class="pt-5">
+        <div class="container mx-auto px-4 mt-20 bg-gray-900/800">
+            <div class="bg-gray-800 rounded-lg overflow-hidden">
+                <div class="relative h-96">
+                    <img id="eventImage" src="" alt="Event Cover"
+                         class="w-full h-full object-cover">
+                    <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-gray-900 to-transparent p-6">
+                        <span id="eventCategory" class="bg-orange-600 text-white px-3 py-1 rounded-full text-sm">Technology</span>
+                        <h1 id="eventTitle" class="text-4xl font-bold mt-2">Tech Conference 2025</h1>
+                        <div class="flex items-center space-x-4 mt-2">
+                            <span class="flex items-center">
+                                <i class="fas fa-calendar-alt text-orange-500 mr-2"></i>
+                                <span id="eventDate"></span>
+                            </span>
+                            <span class="flex items-center">
+                                <i class="fas fa-map-marker-alt text-orange-500 mr-2"></i>
+                                <span id="eventCity"></span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Event Content -->
+        <div class="container mx-auto px-4 mt-8 mb-5">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Main Content -->
+                <div class="lg:col-span-2 space-y-6">
+                    <!-- About Section -->
+                    <div class="bg-gray-800 p-6 rounded-lg">
+                        <h2 class="text-2xl font-bold mb-4">About This Event</h2>
+                        <p id="eventDescription" class="text-gray-300 leading-relaxed">
+                            Join us for the most anticipated tech conference of 2025! This event brings together
+                            industry
+                            leaders, innovators, and tech enthusiasts for two days of inspiring talks, workshops, and
+                            networking opportunities.
+                        </p>
+{#                        <div class="mt-6 space-y-4">#}
+{#                            <h3 class="text-xl font-semibold">What to Expect:</h3>#}
+{#                            <ul class="list-disc list-inside text-gray-300 space-y-2">#}
+{#                                <li>Keynote speeches from industry leaders</li>#}
+{#                                <li>Interactive workshops and demos</li>#}
+{#                                <li>Networking sessions</li>#}
+{#                                <li>Product launches and exhibitions</li>#}
+{#                            </ul>#}
+{#                        </div>#}
+                    </div>
+
+                    <!-- Speakers Section -->
+                    <div class="bg-gray-800 p-6 rounded-lg">
+                        <h2 class="text-2xl font-bold mb-4">Featured Speakers</h2>
+                        <div id="eventSponsors" class="grid grid-cols-2 gap-4">
+                            <div class="flex items-center space-x-4">
+                                <img src="/api/placeholder/64/64" alt="Speaker" class="w-16 h-16 rounded-full">
+                                <div>
+                                    <h3 class="font-semibold">Sarah Johnson</h3>
+                                    <p class="text-gray-400 text-sm">CEO, Tech Innovations</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center space-x-4">
+                                <img src="/api/placeholder/64/64" alt="Speaker" class="w-16 h-16 rounded-full">
+                                <div>
+                                    <h3 class="font-semibold">Michael Chen</h3>
+                                    <p class="text-gray-400 text-sm">CTO, Future Labs</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sidebar -->
+                <div class="space-y-6">
+                    <!-- Ticket Information -->
+                    <div class="bg-gray-800 p-6 rounded-lg">
+                        <div class="flex justify-between items-center mb-4">
+                            <h2 class="text-2xl font-bold">Tickets</h2>
+                            <span id="eventPrice" class="text-2xl font-bold text-orange-500">$299</span>
+                        </div>
+                        <div class="space-y-4">
+                            <div class="flex items-center justify-between text-gray-300">
+                                <span>Available Tickets</span>
+                                <span id="eventCapacity">145/200</span>
+                            </div>
+                            <button class="w-full bg-orange-600 text-white py-3 rounded-lg font-semibold hover:bg-orange-700 transition-colors">
+                                Get Tickets
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Organizer Information -->
+                    <div class="bg-gray-800 p-6 rounded-lg">
+                        <h2 class="text-xl font-bold mb-4">Event Organizer</h2>
+                        <div class="flex items-center space-x-4">
+                            <img src="/api/placeholder/48/48" alt="Organizer" class="w-12 h-12 rounded-full">
+                            <div>
+                                <h3 id="eventOrganizer" class="font-semibold">TechEvents Inc.</h3>
+                                <p class="text-gray-400 text-sm">Organizing tech events since 2020</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- Like/Dislike and Comments Section -->
+        <div class="container mx-auto px-4 my-8">
+            <!-- Like/Dislike Section -->
+            <div class="bg-gray-800 p-6 rounded-lg mb-6">
+                <div class="flex items-center space-x-8 justify-center">
+                    <button class="flex items-center space-x-2 hover:text-orange-500 transition-colors">
+                        <i class="fas fa-thumbs-up text-2xl"></i>
+                        <span class="text-lg font-semibold">1.2K</span>
+                    </button>
+                    <button class="flex items-center space-x-2 hover:text-orange-500 transition-colors">
+                        <i class="fas fa-thumbs-down text-2xl"></i>
+                        <span class="text-lg font-semibold">84</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Comments Section -->
+        <div class="bg-gray-800 p-6 mx-4 mb-4 rounded-lg">
+            <h2 class="text-2xl font-bold mb-6">Comments (24)</h2>
+
+            <!-- Comment Form -->
+            <div class="mb-8">
+                <form class="space-y-4">
+                        <textarea
+                                class="w-full px-4 py-3 rounded-lg bg-gray-700 border border-gray-600 focus:border-orange-500 focus:ring-2 focus:ring-orange-500 focus:ring-opacity-50 text-white"
+                                rows="3"
+                                placeholder="Share your thoughts about this event..."
+                        ></textarea>
+                    <button class="bg-orange-600 text-white px-6 py-2 rounded-lg hover:bg-orange-700 transition-colors">
+                        Post Comment
+                    </button>
+                </form>
+            </div>
+
+
+            <!-- Comments List -->
+            <div class="space-y-6">
+                <!-- Comment 1 -->
+                <div class="border-b border-gray-700 pb-6">
+                    <div class="flex items-start space-x-4">
+                        <img src="/api/placeholder/40/40" alt="User Avatar" class="w-10 h-10 rounded-full">
+                        <div class="flex-1">
+                            <div class="flex items-center justify-between mb-1">
+                                <h4 class="font-semibold">John Doe</h4>
+                                <span class="text-sm text-gray-400">2 hours ago</span>
+                            </div>
+                            <p class="text-gray-300">This looks amazing! I attended last year's conference and it was
+                                incredible. Looking forward to this one!</p>
+                            <div class="flex items-center space-x-4 mt-2">
+                                <button class="text-sm text-gray-400 hover:text-orange-500 transition-colors">Reply
+                                </button>
+                                <button class="text-sm text-gray-400 hover:text-orange-500 transition-colors flex items-center">
+                                    <i class="fas fa-thumbs-up mr-1"></i> 23
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button class="w-full py-3 text-orange-500 hover:text-orange-600 transition-colors font-semibold">
+                    Load More Comments
+                </button>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+{% block scripts %}
+    <script src="/assets/js/script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            loadEventDetails(1);
+        })
+    </script>
+{% endblock %}

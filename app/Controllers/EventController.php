@@ -5,16 +5,23 @@ namespace App\Controllers;
 use App\Core\Controller;
 use App\Core\Http\Request;
 use App\Core\Http\Response;
+use App\Core\DbModel;
 use App\Models\F2FEvent;
 use App\Models\OnlineEvent;
 use App\Models\Event;
 
 class EventController extends Controller
 {
-    public function index($id) : void
+    public function index() : void
     {
         $this->render('/events/index');
     }
+
+    public function show(): void
+    {
+        $this->render('/events/show');
+    }
+
     public function create(Request $request, Response $response): void
     {
         $event = new F2FEvent();
@@ -51,7 +58,29 @@ class EventController extends Controller
 
     public function getAllEvents() : void
     {
-        $events = Event::getAll();
+        $events = Event::getAllEvents();
+        header('Content-Type: application/json');
         echo json_encode($events);
+        return;
+    }
+
+    public function getEventById(Request $request, Response $response, array $params = []) : void
+    {
+        $id = $params[0] ?? null;
+        if(!$id) {
+            $response->setStatusCode(404);
+            echo "Event Id invalid";
+            return;
+        }
+
+        $event = Event::findById($id);
+        if(!$event) {
+            $response->setStatusCode(404);
+            echo "Invalid Event";
+            return;
+        }
+
+        header('Content-Type: application/json');
+        echo json_encode($event);
     }
 }

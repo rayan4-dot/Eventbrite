@@ -5,7 +5,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Category CRUD
     initCategoryCRUD();
-
 });
 
 /**
@@ -19,6 +18,7 @@ function initCategoryDropdown() {
         xhrCategories.onreadystatechange = function () {
             if (xhrCategories.readyState === 4 && xhrCategories.status === 200) {
                 let categories = JSON.parse(xhrCategories.responseText);
+                console.log("Categories: ", categories);
                 categories.forEach(category => {
                     const option = document.createElement('option');
                     option.value = category.id;
@@ -44,7 +44,7 @@ function initRegionCity() {
     }
     let citySelect = document.getElementById('city');
     if (citySelect && regionSelect) {
-        regionSelect.addEventListener('change', function() {
+        regionSelect.addEventListener('change', function () {
             let regionId = this.value;
             citySelect.innerHTML = '<option value="">Loading...</option>';
             citySelect.disabled = true;
@@ -103,7 +103,6 @@ function initCategoryCRUD() {
     const editCategoryModal = document.getElementById('editCategoryModal');
     const closeEditModal = document.getElementById('closeEditModal');
     const categoryForm = document.getElementById('categoryForm');
-    console.log(editCategoryModal);
     if (addCategoryButton && categoryModal) {
         addCategoryButton.addEventListener('click', function () {
             categoryModal.classList.remove('hidden');
@@ -129,7 +128,7 @@ function initCategoryCRUD() {
 
     const editCategoryForm = document.getElementById('editCategoryForm');
     if (editCategoryForm) {
-        editCategoryForm.addEventListener('submit', function(e) {
+        editCategoryForm.addEventListener('submit', function (e) {
             e.preventDefault();
             updateCategory();
         });
@@ -137,16 +136,16 @@ function initCategoryCRUD() {
 
     // Create Category via AJAX
     if (categoryForm) {
-        categoryForm.addEventListener('submit', function(e) {
+        categoryForm.addEventListener('submit', function (e) {
             e.preventDefault();
             const formData = new FormData(categoryForm);
             const xhr = new XMLHttpRequest();
             xhr.open('POST', '/admin/categories', true);
             xhr.onreadystatechange = function () {
-                if(xhr.readyState === 4) {
-                    if(xhr.status === 200) {
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200) {
                         const res = JSON.parse(xhr.responseText);
-                        if(res.success) {
+                        if (res.success) {
                             // Hide modal and refresh category table
                             categoryModal.classList.add('hidden');
                             categoryForm.reset();
@@ -170,7 +169,7 @@ function initCategoryCRUD() {
     const categoryTableBody = document.getElementById('categoryTableBody');
     if (categoryTableBody) {
 
-        categoryTableBody.addEventListener('click', function(e) {
+        categoryTableBody.addEventListener('click', function (e) {
             if (e.target.matches('.edit-button')) {
 
                 const categoryId = e.target.getAttribute('data-id');
@@ -195,12 +194,12 @@ function initCategoryCRUD() {
 function updateCategoryTable() {
     const xhr = new XMLHttpRequest();
     xhr.open('GET', '/api/categories', true);
-    xhr.onreadystatechange = function() {
-        if(xhr.readyState === 4 && xhr.status === 200) {
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
             let categories = JSON.parse(xhr.responseText);
             console.log(categories);
             let html = "";
-            if(categories.length > 0) {
+            if (categories.length > 0) {
                 categories.forEach(category => {
                     html += `
                     <tr class="hover:bg-gray-700/50">
@@ -243,7 +242,7 @@ function updateCategoryTable() {
             document.getElementById('categoryTableBody').innerHTML = html;
         }
     };
-    xhr.onerror = function() {
+    xhr.onerror = function () {
         console.error("Error fetching categories.");
     };
     xhr.send();
@@ -256,7 +255,7 @@ function updateCategoryTable() {
 function editCategory(categoryId) {
     const xhr = new XMLHttpRequest();
     xhr.open('GET', `/admin/categories/edit/${categoryId}`, true);
-    xhr.onreadystatechange = function() {
+    xhr.onreadystatechange = function () {
         if (xhr.readyState === 4 && xhr.status === 200) {
             const category = JSON.parse(xhr.responseText);
             // Populate your edit modal fields (assumes you have these fields in the edit modal)
@@ -281,8 +280,8 @@ function updateCategory() {
 
     const xhr = new XMLHttpRequest();
     xhr.open('POST', `/admin/categories/edit/${categoryId}`, true);
-    xhr.onreadystatechange = function() {
-        if(xhr.readyState === 4 && xhr.status === 200) {
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
             const res = JSON.parse(xhr.responseText);
             console.log(res);
             if (res.success) {
@@ -296,6 +295,7 @@ function updateCategory() {
     xhr.send(formData);
 }
 
+
 /**
  * Delete a category via AJAX.
  * @param {string} categoryId
@@ -303,8 +303,8 @@ function updateCategory() {
 function deleteCategory(categoryId) {
     const xhr = new XMLHttpRequest();
     xhr.open('POST', `/admin/categories/delete/${categoryId}`, true);
-    xhr.onreadystatechange = function() {
-        if(xhr.readyState === 4 && xhr.status === 200) {
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
             const res = JSON.parse(xhr.responseText);
             if (res.success) {
                 updateCategoryTable();
@@ -315,3 +315,72 @@ function deleteCategory(categoryId) {
     };
     xhr.send();
 }
+
+function loadAllEvents() {
+    const eventContainer = document.getElementById('eventGrid');
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', '/api/events', true);
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            let events = JSON.parse(xhr.responseText);
+            let html = '';
+            events.forEach(event => {
+                html += `
+                        <div class="bg-gray-800 p-4 rounded-lg">
+                            <img src="/assets/img/event.jpg" alt="Event Image" class="w-full h-40 object-cover rounded">
+                            <div class="mt-2 text-orange-500">${event.categoryId}</div>
+                            <h3 class="text-white text-xl font-bold">${event.title}</h3>
+                            <p class="text-gray-400">${event.location}</p>
+                            <p class="text-white font-bold mt-2">${event.price}</p>
+                            <a href="/events/${event.id}" class="view-details btn btn-sm bg-orange-600 text-white mt-2" data-id="${event.id}">View Details</a>
+                        </div>
+                    `;
+            })
+            eventContainer.innerHTML = html;
+        }
+    }
+    xhr.send();
+}
+
+/**
+ * @param {number|string} eventId - The event ID to fetch.
+ */
+function loadEventDetails(eventId) {
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', `/api/events/${eventId}`, true);
+
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4) {
+            if (xhr.status === 200) {
+                // Parse the JSON response
+                const event = JSON.parse(xhr.responseText);
+                console.log(document.getElementById('eventImage'));
+                console.log(event);
+                document.getElementById('eventImage').src = `/assets${event.picture}`;
+                document.getElementById('eventCategory').textContent = event.categoryname;
+                document.getElementById('eventTitle').textContent = event.title;
+                document.getElementById('eventDate').textContent = event.eventdate;
+                document.getElementById('eventCity').textContent = event.location;
+                document.getElementById('eventDescription').textContent = event.description;
+                document.getElementById('eventSponsors').innerHTML = '';
+                document.getElementById('eventCapacity').textContent = event.capacity;
+                console.log(event.price);
+                if(event.price == 0 || event.price === null) {
+                    document.getElementById('eventPrice').textContent = "Free";
+                } else {
+                    document.getElementById('eventPrice').textContent = event.price;
+                }
+
+            } else {
+                console.error('Error fetching event details:', xhr.status);
+            }
+        }
+    };
+
+    xhr.onerror = function () {
+        console.error("Network error while fetching event details");
+    };
+
+    xhr.send();
+}
+
