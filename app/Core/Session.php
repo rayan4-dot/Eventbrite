@@ -25,4 +25,9 @@ class Session
     {
         unset($_SESSION[$key]);
     }
+
+    public function has($key) : bool
+    {
+        return isset($_SESSION['user']);
+    }
 }

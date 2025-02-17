@@ -18,7 +18,6 @@ function initCategoryDropdown() {
         xhrCategories.onreadystatechange = function () {
             if (xhrCategories.readyState === 4 && xhrCategories.status === 200) {
                 let categories = JSON.parse(xhrCategories.responseText);
-                console.log("Categories: ", categories);
                 categories.forEach(category => {
                     const option = document.createElement('option');
                     option.value = category.id;
@@ -197,8 +196,7 @@ function updateCategoryTable() {
     xhr.onreadystatechange = function () {
         if (xhr.readyState === 4 && xhr.status === 200) {
             let categories = JSON.parse(xhr.responseText);
-            console.log(categories);
-            let html = "";
+
             if (categories.length > 0) {
                 categories.forEach(category => {
                     html += `
@@ -283,7 +281,7 @@ function updateCategory() {
     xhr.onreadystatechange = function () {
         if (xhr.readyState === 4 && xhr.status === 200) {
             const res = JSON.parse(xhr.responseText);
-            console.log(res);
+
             if (res.success) {
                 document.getElementById('editCategoryModal').classList.add('hidden');
                 updateCategoryTable();
@@ -354,7 +352,6 @@ function loadEventDetails(eventId) {
             if (xhr.status === 200) {
                 // Parse the JSON response
                 const event = JSON.parse(xhr.responseText);
-                console.log(document.getElementById('eventImage'));
                 console.log(event);
                 document.getElementById('eventImage').src = `/assets${event.picture}`;
                 document.getElementById('eventCategory').textContent = event.categoryname;
@@ -364,12 +361,21 @@ function loadEventDetails(eventId) {
                 document.getElementById('eventDescription').textContent = event.description;
                 document.getElementById('eventSponsors').innerHTML = '';
                 document.getElementById('eventCapacity').textContent = event.capacity;
-                console.log(event.price);
+
                 if(event.price == 0 || event.price === null) {
                     document.getElementById('eventPrice').textContent = "Free";
                 } else {
                     document.getElementById('eventPrice').textContent = event.price;
                 }
+
+                // Update modal elements
+                document.getElementById('modalEventId').value = event.id;
+                document.getElementById('modalEventTitle').textContent = event.title;
+                document.getElementById('modalEventPrice').textContent = event.price == 0 ? 'Free' : `$${event.price}`;
+                document.getElementById('modalEventDate').textContent = event.eventdate;
+                document.getElementById('modalEventLocation').textContent = event.location;
+                document.getElementById('modalTotalPrice').textContent = event.price == 0 ? 'Free' : `$${event.price}`;
+
 
             } else {
                 console.error('Error fetching event details:', xhr.status);
@@ -384,3 +390,96 @@ function loadEventDetails(eventId) {
     xhr.send();
 }
 
+
+function initBookingModal() {
+    const bookingForm = document.getElementById('bookingForm');
+    if (bookingForm) {
+        bookingForm.addEventListener('submit', function (e) {
+            e.preventDefault();
+            const formData = new FormData(bookingForm);
+            console.log(formData);
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', '/book', true); // Ensure your route for free booking is /book
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200) {
+                        const res = JSON.parse(xhr.responseText);
+                        if (res.success) {
+                            alert(res.message);
+                            // Optionally, update the capacity on the page
+                            document.getElementById('registrationModal').classList.add('hidden');
+                            bookingForm.reset();
+                        } else {
+                            alert("Error: " + (res.message || JSON.stringify(res.errors)));
+                        }
+                    } else {
+                        console.error("Server error:", xhr.status);
+                    }
+                }
+            };
+            xhr.onerror = function () {
+                console.error("Network error during booking.");
+            };
+            xhr.send(formData);
+        });
+    }
+}
+
+
+function loadTopEvents() {
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', '/api/topEvents', true);
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4) {
+            if (xhr.status === 200) {
+                let events = JSON.parse(xhr.responseText);
+                const container = document.getElementById('topEventsContainer');
+                const noEventsMessage = document.getElementById('noEventsMessage');
+                let html = "";
+                if (events.length > 0) {
+                    events.forEach(event => {
+                        html += `
+                        <div class="event-card bg-gray-800 rounded-xl overflow-hidden border border-gray-700">
+                            <div class="relative">
+                               <img src="${ event.picture ? '/assets' + event.picture : '/assets/img/placeholder.jpg' }" alt="${ event.title }" class="w-full h-56 object-cover">
+                                <div class="absolute top-4 right-4 bg-gray-900/80 px-3 py-1 rounded-full text-sm">
+                                    ${ event.categoryName || '' }
+                                </div>
+                            </div>
+                            <div class="p-6 space-y-3">
+                                <div class="flex items-center gap-2 text-sm">
+                                    <span class="text-orange-500 font-medium">${ event.date ? event.date : '' }</span>
+                                    <span class="text-gray-500">•</span>
+                                    <span class="text-gray-400">${ event.location ? event.location : '' }</span>
+                                </div>
+                                <h3 class="font-bold text-xl">${ event.title }</h3>
+                                <p class="text-gray-400">${ event.description ? event.description.substring(0, 60) + '...' : '' }</p>
+                                <div class="flex items-center justify-between mt-4">
+                                    <span class="text-lg font-bold text-orange-500">
+                                        ${ event.price == 0 ? 'Free' : '$' + event.price }
+                                    </span>
+                                    <button class="px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded-lg transition-colors"
+                                        onclick="window.location.href='/events/${ event.id }'">
+                                        Details
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        `;
+                    });
+                    container.innerHTML = html;
+                    noEventsMessage.classList.add('hidden');
+                } else {
+                    container.innerHTML = "";
+                    noEventsMessage.classList.remove('hidden');
+                }
+            } else {
+                console.error("Error fetching top events:", xhr.status);
+            }
+        }
+    };
+    xhr.onerror = function () {
+        console.error("Network error while fetching top events.");
+    };
+    xhr.send();
+}

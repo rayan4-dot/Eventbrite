@@ -1,0 +1,115 @@
+{% extends 'layouts/main.html.twig' %}
+{% block title %} Tickets {% endblock %}
+
+{% block content %}
+<div class="pt-16">
+    <div class="container mx-auto px-4 py-8">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex justify-between items-center mb-8">
+                <h1 class="text-3xl font-bold">My Tickets</h1>
+                <div class="flex gap-4">
+                    <select class="select select-bordered bg-gray-800 text-white border-gray-700">
+                        <option>All Events</option>
+                        <option>Upcoming</option>
+                        <option>Past</option>
+                    </select>
+                </div>
+            </div>
+
+            <div id="tickets-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Ticket Card 1 -->
+                <div class="card bg-gray-800 shadow-xl event-card">
+                    <div class="relative">
+                        <img src="https://picsum.photos/id/1018/400/200" alt="Event" class="w-full h-48 object-cover">
+                        <div class="absolute top-4 right-4 bg-orange-600 text-white px-3 py-1 rounded">
+                            #12345
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <h2 class="card-title text-white">Tech Innovation Summit 2024</h2>
+                        <div class="space-y-2 text-gray-300">
+                            <div class="flex items-center gap-2">
+                                <i class="fas fa-calendar-alt text-orange-600"></i>
+                                <span>March 15-16, 2024</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <i class="fas fa-map-marker-alt text-orange-600"></i>
+                                <span>San Francisco, CA</span>
+                            </div>
+                        </div>
+                        <div class="card-actions justify-end mt-4">
+                            <a href="/ticket/12345" class="btn bg-orange-600 hover:bg-orange-700 text-white border-none">
+                                View Ticket
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Add more ticket cards as needed -->
+            </div>
+
+            <!-- Pagination -->
+{#            <div class="flex justify-center mt-8">#}
+{#                <div class="join">#}
+{#                    <button class="join-item btn bg-gray-800 text-white hover:bg-gray-700 border-gray-700">«</button>#}
+{#                    <button class="join-item btn bg-orange-600 text-white hover:bg-orange-700 border-none">1</button>#}
+{#                    <button class="join-item btn bg-gray-800 text-white hover:bg-gray-700 border-gray-700">2</button>#}
+{#                    <button class="join-item btn bg-gray-800 text-white hover:bg-gray-700 border-gray-700">3</button>#}
+{#                    <button class="join-item btn bg-gray-800 text-white hover:bg-gray-700 border-gray-700">»</button>#}
+{#                </div>#}
+{#            </div>#}
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const ticketsContainer = document.getElementById('tickets-container');
+            const xhr = new XMLHttpRequest();
+            xhr.open('GET', '/api/tickets', true);
+            xhr.onreadystatechange = function() {
+                if(xhr.readyState === 4) {
+                    if(xhr.status === 200) {
+                        let tickets = JSON.parse(xhr.responseText);
+
+                        ticketsContainer.innerHTML = "";
+                        tickets.forEach(ticket => {
+                            let ticketHtml = `
+                                 <div class="card bg-gray-800 shadow-xl event-card">
+                                    <div class="relative">
+                                        <img src="/assets/${ticket.picture}" alt="Event" class="w-full h-48 object-cover">
+                                        <div class="absolute top-4 right-4 bg-orange-600 text-white px-3 py-1 rounded">
+                                            #12345
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <h2 class="card-title text-white">${ticket.title}</h2>
+                                        <div class="space-y-2 text-gray-300">
+                                            <div class="flex items-center gap-2">
+                                                <i class="fas fa-calendar-alt text-orange-600"></i>
+                                                <span>${ticket.eventdate}</span>
+                                            </div>
+                                            <div class="flex items-center gap-2">
+                                                <i class="fas fa-map-marker-alt text-orange-600"></i>
+                                                <span>${ticket.location}</span>
+                                            </div>
+                                        </div>
+                                        <div class="card-actions justify-end mt-4">
+                                            <a href="/ticket/${ticket.id}" class="btn bg-orange-600 hover:bg-orange-700 text-white border-none">
+                                                View Ticket
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+                            ticketsContainer.innerHTML += ticketHtml;
+                        })
+                    }
+                }
+            }
+            xhr.send();
+        })
+    </script>
+{% endblock %}

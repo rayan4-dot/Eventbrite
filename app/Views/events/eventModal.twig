@@ -1,0 +1,75 @@
+<div id="registrationModal"
+     class="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center hidden overflow-y-auto py-8">
+    <div class="bg-gray-800 rounded-lg w-full max-w-2xl mx-4 my-auto">
+        <!-- Modal Header - Fixed at top -->
+        <div class="border-b border-gray-700 p-6 sticky bg-gray-800 z-10">
+            <div class="flex justify-between items-center">
+                <h2 class="text-2xl font-bold text-white">Event Registration</h2>
+                <button class="text-gray-400 hover:text-white"
+                        onclick="document.getElementById('registrationModal').classList.add('hidden')">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                         stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Modal Content - Scrollable -->
+        <form id="bookingForm" class="p-6 space-y-6" method="POST" action="">
+            <input type="hidden" name="eventId" id="modalEventId" value="" />
+            <!-- Event Summary -->
+            <div class="bg-gray-900 p-4 rounded-lg">
+                <div class="flex justify-between items-center mb-2">
+                    <h3 class="text-lg font-semibold text-white" id="modalEventTitle"></h3>
+                    <span class="text-orange-500 font-bold" id="modalEventPrice"></span>
+                </div>
+                <div class="text-gray-400 text-sm">
+                    <p>Date: <span id="modalEventDate"></span></p>
+                    <p>Location: <span id="modalEventLocation"></span></p>
+                </div>
+            </div>
+
+            <!-- Ticket Quantity -->
+            <div>
+                <label class="block text-sm font-medium text-gray-300 mb-2">Number of Tickets</label>
+                <div class="flex items-center space-x-4">
+                    <button type="button"
+                            class="bg-gray-700 text-white w-8 h-8 rounded-full flex items-center justify-center hover:bg-gray-600">
+                        -
+                    </button>
+                    <input type="number" name="quantity" value="1" min="1" max="5"
+                           class="bg-gray-700 border border-gray-600 text-white rounded-lg w-20 text-center py-2">
+                    <button type="button"
+                            class="bg-gray-700 text-white w-8 h-8 rounded-full flex items-center justify-center hover:bg-gray-600">
+                        +
+                    </button>
+                </div>
+            </div>
+
+            <!-- Submit Section - Fixed at bottom -->
+            <div class="border-t border-gray-700 pt-6 sticky bg-gray-800">
+                <!-- Free Event Button -->
+                <div id="freeEventButton" class="hidden">
+                    <button type="submit"
+                            class="w-full bg-orange-600 text-white py-3 rounded-lg font-semibold hover:bg-orange-700 transition-colors">
+                        Get Ticket
+                    </button>
+                </div>
+
+                <!-- Paid Event Button -->
+                <div id="paidEventButton" class="hidden">
+                    <div class= "flex justify-between items-center mb-6">
+                        <span class="text-lg text-gray-300">Total</span>
+                        <span class="text-2xl font-bold text-orange-500" id="modalTotalPrice">$299</span>
+                    </div>
+                    <button type="button" onclick="window.location.href='/payment'"
+                            class="w-full bg-orange-600 text-white py-3 rounded-lg font-semibold hover:bg-orange-700 transition-colors">
+                        Proceed to Payment
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
