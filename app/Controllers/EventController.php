@@ -64,6 +64,14 @@ class EventController extends Controller
         return;
     }
 
+    public function getTopEvents()
+    {
+        $events = Event::getTopEvents();
+        header("Content-Type: application/json");
+        echo json_encode($events);
+        exit;
+    }
+
     public function getEventById(Request $request, Response $response, array $params = []) : void
     {
         $id = $params[0] ?? null;

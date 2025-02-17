@@ -42,15 +42,15 @@
                             leaders, innovators, and tech enthusiasts for two days of inspiring talks, workshops, and
                             networking opportunities.
                         </p>
-{#                        <div class="mt-6 space-y-4">#}
-{#                            <h3 class="text-xl font-semibold">What to Expect:</h3>#}
-{#                            <ul class="list-disc list-inside text-gray-300 space-y-2">#}
-{#                                <li>Keynote speeches from industry leaders</li>#}
-{#                                <li>Interactive workshops and demos</li>#}
-{#                                <li>Networking sessions</li>#}
-{#                                <li>Product launches and exhibitions</li>#}
-{#                            </ul>#}
-{#                        </div>#}
+                        {#                        <div class="mt-6 space-y-4"> #}
+                        {#                            <h3 class="text-xl font-semibold">What to Expect:</h3> #}
+                        {#                            <ul class="list-disc list-inside text-gray-300 space-y-2"> #}
+                        {#                                <li>Keynote speeches from industry leaders</li> #}
+                        {#                                <li>Interactive workshops and demos</li> #}
+                        {#                                <li>Networking sessions</li> #}
+                        {#                                <li>Product launches and exhibitions</li> #}
+                        {#                            </ul> #}
+                        {#                        </div> #}
                     </div>
 
                     <!-- Speakers Section -->
@@ -88,7 +88,7 @@
                                 <span>Available Tickets</span>
                                 <span id="eventCapacity">145/200</span>
                             </div>
-                            <button class="w-full bg-orange-600 text-white py-3 rounded-lg font-semibold hover:bg-orange-700 transition-colors">
+                            <button class="ticket-btn w-full bg-orange-600 text-white py-3 rounded-lg font-semibold hover:bg-orange-700 transition-colors">
                                 Get Tickets
                             </button>
                         </div>
@@ -176,12 +176,48 @@
         </div>
     </div>
 
+    {% include 'events/eventModal.twig' %}
+
 {% endblock %}
 {% block scripts %}
     <script src="/assets/js/script.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             loadEventDetails(1);
+            initBookingModal();
         })
+        // Function to initialize the modal based on event type
+        function initializeModal(isEventFree) {
+            const freeButton = document.getElementById('freeEventButton');
+            const paidButton = document.getElementById('paidEventButton');
+            const priceElement = document.getElementById('modalEventPrice');
+
+            if (isEventFree) {
+                freeButton.classList.remove('hidden');
+                paidButton.classList.add('hidden');
+                priceElement.textContent = 'Free';
+            } else {
+                freeButton.classList.add('hidden');
+                paidButton.classList.remove('hidden');
+            }
+        }
+
+
+
+        // Show modal with proper scroll
+        document.querySelector('.ticket-btn').addEventListener('click', function () {
+            const modal = document.getElementById('registrationModal');
+            modal.classList.remove('hidden');
+
+            // Determine if event is free (you can modify this logic based on your needs)
+            const eventPrice = document.getElementById('eventPrice').textContent;
+            initializeModal(eventPrice === 'Free');
+        });
+
+        // Close modal
+        document.querySelector('#registrationModal button').addEventListener('click', function () {
+            document.getElementById('registrationModal').classList.add('hidden');
+        });
+
     </script>
 {% endblock %}

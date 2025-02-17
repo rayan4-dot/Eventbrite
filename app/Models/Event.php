@@ -7,6 +7,7 @@ use App\Core\DbModel;
 
 abstract class Event extends DbModel
 {
+    public int $id = 0;
     public string $title = '';
     public string $picture = '';
     public int $categoryId;
@@ -39,6 +40,20 @@ abstract class Event extends DbModel
         $stmt->execute();
         $events = $stmt->fetchAll(\PDO::FETCH_CLASS);
         return $events;
+    }
+
+    public static function getTopEvents()
+    {
+        $sql = "SELECT events.*,
+                   categories.name AS categoryName,
+                   users.firstName || users.lastName AS organiserName
+            FROM events
+            LEFT JOIN categories ON events.categoryId = categories.id
+            LEFT JOIN users ON events.organiserId = users.id
+            LIMIT 3;";
+        $stmt = self::prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
     }
 
     public static function findById(int $id) : ?object

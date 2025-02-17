@@ -8,6 +8,7 @@ use App\Controllers\CategoryController;
 use App\Controllers\RegionController;
 use App\Controllers\CityController;
 use App\Controllers\SponsorController;
+use App\Controllers\TicketController;
 
 $app->router->get('/', [HomeController::class, 'home']);
 
@@ -35,6 +36,11 @@ $app->router->get('/admin/categories/edit/{id}', [CategoryController::class, 'ed
 $app->router->post('/admin/categories/edit/{id}', [CategoryController::class, 'editCategory']);
 $app->router->post('/admin/categories/delete/{id}', [CategoryController::class, 'delete']);
 
+$app->router->post('/book', [\App\Controllers\BookingController::class, 'bookEvent']);
+$app->router->get('/tickets', [TicketController::class, 'showAll']);
+$app->router->get('/tickets/{id}', [TicketController::class, 'show']);
+$app->router->get('/api/tickets/{id}/download', [TicketController::class, 'downloadTicket']);
+
 $app->router->get('/api/categories', [CategoryController::class, 'getAllCategories']);
 $app->router->get('/api/regions', [RegionController::class, 'getAllRegions']);
 $app->router->get('/api/cities', [CityController::class, 'getRegionCities']);
@@ -42,3 +48,6 @@ $app->router->get('/api/sponsors', [SponsorController::class, 'getAllSponsors'])
 $app->router->get('/api/sponsors', [SponsorController::class, 'create']);
 $app->router->get('/api/events', [EventController::class, 'getAllEvents']);
 $app->router->get('/api/events/{id}', [EventController::class, 'getEventById']);
+$app->router->get('/api/topEvents', [EventController::class, 'getTopEvents']);
+$app->router->get('/api/tickets', [TicketController::class, 'getAllTickets']);
+$app->router->get('/api/ticket/{id}', [TicketController::class, 'getTicketById']);
