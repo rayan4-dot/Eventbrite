@@ -1,7 +1,12 @@
+RewriteEngine On
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^ index.php [QSA,L]
 # Enable URL rewriting
 RewriteEngine On
 
-# If the request is not for an existing file or directory, redirect to index.php
+# If the request is not for an existing file or directory, redirect to index.twig
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^ index.php [QSA,L]

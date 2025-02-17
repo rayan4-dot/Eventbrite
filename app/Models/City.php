@@ -3,26 +3,21 @@
 namespace App\Models;
 
 use App\Core\DbModel;
-use Cassandra\Date;
 
-class Booking extends DbModel
+class City extends DbModel
 {
-    public int $userId;
-    public int $eventId;
-    public float $price;
-    public int $quantity = 0;
-    public float $totalPrice = 0;
-
+    public string $name = '';
+    public int $regionId;
     public function getTableName() : string
     {
         // TODO: Implement getTableName() method.
-        return 'bookings';
+        return 'cities';
     }
 
     public function getAttributes() : array
     {
         // TODO: Implement getAttributes() method.
-        return ['userId', 'eventId', 'quantity', 'totalPrice'];
+        return ['name', 'regionId'];
     }
 
     public function getPrimaryKey() : string
@@ -31,9 +26,11 @@ class Booking extends DbModel
         return 'id';
     }
 
-
-    public function rules() : array
+    function rules(): array
     {
+        // TODO: Implement rules() method.
         return [];
     }
+
+
 }

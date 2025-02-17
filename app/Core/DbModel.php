@@ -1,42 +1,30 @@
 <?php
 
+
 namespace App\Core;
 
 use App\Core\Application;
 
 abstract class DbModel extends Model
 {
-    abstract public function getTableName();
+    abstract public function getTableName();  
     abstract public function getAttributes();
+    abstract public function getPrimaryKey();
 
     public function save()
     {
-        $table = $this->getTableName();
+        $table = $this->getTableName();  
         $attributes = $this->getAttributes();
         $columns = implode(',', $attributes);
         $placeholders = implode(',', array_fill(0, count($attributes), '?'));
         $sql = "INSERT INTO $table ($columns) VALUES ($placeholders);";
         $stmt = $this->prepare($sql);
         $values = [];
+
         foreach($attributes as $attribute) {
             $values[] = $this->{$attribute};
         }
         return $stmt->execute($values); 
-    }
-
-    public function update(int $id, array $data): bool
-    {
-        $table = $this->getTableName();
-        $columns = array_keys($data);
-        $setClause = implode(', ', array_map(fn($col) => "$col = :$col", $columns));
-        $sql = "UPDATE $table SET $setClause WHERE id = :id";
-        $stmt = self::prepare($sql);
-
-        foreach ($data as $key => $value) {
-            $stmt->bindValue(":$key", $value);
-        }
-        $stmt->bindValue(":id", $id);
-        return $stmt->execute();
     }
 
     public function delete(int $id): bool
@@ -52,9 +40,9 @@ abstract class DbModel extends Model
     {
         $tableName = (new static())->getTableName();
         $attributes = array_keys($where);
+        $columns = implode(",",(new static())->getAttributes());
         $sql = implode(" AND ", array_map(fn($attr) => "$attr = :$attr", $attributes));
-        $stmt = self::prepare("SELECT * FROM $tableName WHERE $sql");
-
+        $stmt = self::prepare("SELECT     $columns  FROM $tableName WHERE $sql");
         foreach ($where as $key => $item) {
             $stmt->bindValue(":$key", $item);
         }
@@ -72,4 +60,11 @@ abstract class DbModel extends Model
         return Application::$app->db->conn->prepare($sql);
     }
 
+    public static function findBySql($sql)
+    {
+        $stmt = self::prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+    }
 }
+

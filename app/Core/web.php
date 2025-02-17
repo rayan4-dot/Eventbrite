@@ -16,6 +16,8 @@ $app->router->post('/login', [AuthController::class, 'login']);
 
 $app->router->get('/register', [AuthController::class, 'register']);
 $app->router->post('/register', [AuthController::class, 'register']);
+$app->router->get('/dashboard', [AdminController::class, 'dashboard']);
+
 
 $app->router->get('/logout', [AuthController::class, 'logout']);
 
@@ -24,12 +26,11 @@ $app->router->get('/logout', [AuthController::class, 'logout']);
 
 $app->router->get('/admin/dashboard', [AdminController::class, 'dashboard']);
 $app->router->get('/admin/users', [AdminController::class, 'users']);
+
 $app->router->get('/admin/categories', [CategoryController::class, 'create']);
 $app->router->post('/admin/categories', [CategoryController::class, 'create']);
-
-$app->router->get('/admin/categories/edit/{id}', [CategoryController::class, 'edit']);
-$app->router->post('/admin/categories/edit/{id}', [CategoryController::class, 'edit']);
-
+$app->router->get('/admin/categories/edit/{id}', [CategoryController::class, 'editCategory']);
+$app->router->post('/admin/categories/edit/{id}', [CategoryController::class, 'editCategory']);
 $app->router->post('/admin/categories/delete/{id}', [CategoryController::class, 'delete']);
 $app->router->get('/payment/create', [PaymentController::class, 'createPayment']);
 $app->router->get('/payment/success', [PaymentController::class, 'executePayment']);

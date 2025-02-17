@@ -45,4 +45,14 @@ class Request
         }
         return $body;
     }
+
+    public function get($key)
+    {
+        return $_GET[$key] ?? null;
+    }
+
+    public function post($key)
+    {
+        return $_POST[$key];
+    }
 }

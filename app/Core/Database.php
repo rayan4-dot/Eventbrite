@@ -1,5 +1,5 @@
 <?php
-
+    
 namespace App\Core;
 
 class Database
@@ -12,7 +12,7 @@ class Database
             $this->conn = new \PDO($dsn, $config['db']['username'], $config['db']['password'], $config['db']['options']);
         }
         catch(\PDOException $e) {
-            dump("Database connection error: " . $e->getMessage());
+            var_dump("Database connection error: " . $e->getMessage());
         }
     }
 
@@ -27,7 +27,7 @@ class Database
             $this->conn->exec($sql);
         }
         catch(\PDOException $e) {
-            dump($e->getMessage());
+            var_dump($e->getMessage());
         }
     }
 

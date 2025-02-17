@@ -12,11 +12,19 @@ class Category extends DbModel
 
     public function getTableName(): string
     {
+        // TODO: Implement getTableName() method.
         return 'categories';
+    }
+
+    public function getPrimaryKey()
+    {
+        // TODO: Implement getPrimaryKey() method.
+        return 'id';
     }
 
     public function getAttributes(): array
     {
+        // TODO: Implement getAttributes() method.
         return ['name', 'description'];
     }
 
@@ -25,24 +33,6 @@ class Category extends DbModel
         return [
             'name' => [$this->validator::RULE_REQUIRED]
         ];
-    }
-
-    public function updateCategory(int $id, array $data): bool
-    {
-        return $this->update($id, $data);
-    }
-
-    public function deleteCategory(int $id): bool
-    {
-        return $this->delete($id);
-    }
-
-    public static function getAll(): array
-    {
-        $table = (new static())->getTableName();
-        $stmt = self::prepare("SELECT * FROM $table");
-        $stmt->execute();
-        return $stmt->fetchAll(\PDO::FETCH_CLASS, static::class);
     }
 
     public static function getById(int $id): ?Category
