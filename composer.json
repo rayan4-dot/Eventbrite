@@ -6,9 +6,12 @@
     "symfony/var-dumper": "^5.3",
     "twig/twig": "^3.19",
     "ext-pdo": "*",
+    "openai/openai-php": "^1.0",
     "stripe/stripe-php": "^16.5",
     "paypal/rest-api-sdk-php": "^1.14"
   },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
   "autoload": {
     "psr-4": {
       "App\\": "app/"
