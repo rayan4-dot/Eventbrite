@@ -3,7 +3,7 @@
 namespace App\Controllers;
 
 use App\Services\PayPalService;
-use App\Services\StripeService; // Make sure to create this service
+use App\Services\StripeService;
 use App\Core\Http\Request;
 use App\Core\Http\Response;
 use App\Models\Event;
@@ -16,25 +16,25 @@ class PaymentController
     public function __construct()
     {
         $this->paypalService = new PayPalService();
-        $this->stripeService = new StripeService(); // Initialize Stripe service
+        $this->stripeService = new StripeService(); 
     }
 
     public function createPayment(Request $request, Response $response)
     {
-        // Fetch event_id from the query parameters
+
         $eventId = $_GET['event_id'] ?? null;
 
-        // Ensure event_id exists, otherwise return an error
+
         if (!$eventId) {
             $response->setStatusCode(400);
             echo "Event ID is missing.";
             return;
         }
 
-        // Fetch event details from the database
+
         $eventDetails = $this->getEventDetails($eventId);
 
-        // Check if the event details were retrieved successfully
+
         if (!$eventDetails) {
             $response->setStatusCode(404);
             echo "Event not found.";
@@ -45,18 +45,18 @@ class PaymentController
         $currency = 'USD';
         $description = 'Ticket for ' . $eventDetails['name'];
 
-        // Determine which payment method to use
-        $paymentMethod = $_POST['payment_method'] ?? null; // Assuming you have a form field for this
+
+        $paymentMethod = $_POST['payment_method'] ?? null; 
 
         if ($paymentMethod === 'paypal') {
-            // Define return and cancel URLs for PayPal
+
             $returnUrl = 'http://yourwebsite.com/payment/success?event_id=' . $eventId;
             $cancelUrl = 'http://yourwebsite.com/payment/cancel?event_id=' . $eventId;
 
-            // Create payment using PayPalService
+
             $payment = $this->paypalService->createPayment($amount, $currency, $description, $returnUrl, $cancelUrl);
 
-            // Redirect to PayPal approval URL
+
             foreach ($payment->getLinks() as $link) {
                 if ($link->getRel() == 'approval_url') {
                     $approvalUrl = $link->getHref();
@@ -72,9 +72,9 @@ class PaymentController
                 echo "Error in payment creation.";
             }
         } elseif ($paymentMethod === 'stripe') {
-            // Create a payment intent using StripeService
+
             try {
-                $paymentIntent = $this->stripeService->createPaymentIntent($amount * 100, $currency); // Amount in cents
+                $paymentIntent = $this->stripeService->createPaymentIntent($amount * 100, $currency);
                 echo json_encode(['clientSecret' => $paymentIntent->client_secret]);
             } catch (\Exception $e) {
                 $response->setStatusCode(500);
@@ -88,38 +88,38 @@ class PaymentController
 
     public function executePayment(Request $request, Response $response)
     {
-        // Handle PayPal payment execution
+
         $paymentId = $_GET['paymentId'] ?? null;
         $payerId = $_GET['PayerID'] ?? null;
 
         if ($paymentId && $payerId) {
-            // Capture the payment and confirm the transaction
+
             $result = $this->paypalService->executePayment($paymentId, $payerId);
 
-            // Fetch event details for confirmation
+
             $eventId = $_GET['event_id'] ?? null;
             $event = $this->getEventDetails($eventId);
 
             if ($result->getState() == 'approved') {
                 echo "Payment successful! You have successfully purchased a ticket for " . $event['name'];
-                // Optionally record the payment in your database here
+
             } else {
                 $response->setStatusCode(400);
                 echo "Payment failed. Please try again.";
             }
         } else {
-            // Handle Stripe payment confirmation
-            $paymentIntentId = $_POST['payment_intent'] ?? null; // Assuming you send this from the frontend
+
+            $paymentIntentId = $_POST['payment_intent'] ?? null;
 
             if ($paymentIntentId) {
-                // Verify the payment intent with Stripe
+
                 $result = $this->stripeService->retrievePaymentIntent($paymentIntentId);
 
                 if ($result->status === 'succeeded') {
-                    $eventId = $_POST['event_id'] ?? null; // Get event ID from the request
+                    $eventId = $_POST['event_id'] ?? null; 
                     $event = $this->getEventDetails($eventId);
                     echo "Payment successful! You have successfully purchased a ticket for " . $event['name'];
-                    // Optionally record the payment in your database here
+
                 } else {
                     $response->setStatusCode(400);
                     echo "Payment failed. Please try again.";
@@ -133,18 +133,18 @@ class PaymentController
 
     private function getEventDetails($eventId)
     {
-        // Use the Event model to fetch event details from the database
+
         $event = Event::findById($eventId);
 
-        // Check if the event was found
+
         if ($event) {
             return [
-                'name' => $event->title, // Assuming 'title' is the event name
-                'price' => $event->price  // Assuming 'price' is the event price
+                'name' => $event->title, 
+                'price' => $event->price  
             ];
         }
 
-        // Return null if the event is not found
+
         return null;
     }
 }
