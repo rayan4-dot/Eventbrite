@@ -9,7 +9,7 @@ class StripeService
 {
     public function __construct()
     {
-        Stripe::setApiKey('YOUR_STRIPE_SECRET_KEY'); // Set your Stripe secret key
+        Stripe::setApiKey('YOUR_STRIPE_SECRET_KEY'); 
     }
 
     public function createPaymentIntent($amount, $currency)

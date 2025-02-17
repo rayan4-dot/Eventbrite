@@ -39,5 +39,5 @@ $app->router->get('/payment/cancel', function () {
 });
 
 
-$router->get('/payment/success', [PaymentSuccessController::class, 'index']);
-$router->get('/payment/cancel', [PaymentCancelController::class, 'index']);
+// $router->get('/payment/success', [PaymentSuccessController::class, 'index']);
+// $router->get('/payment/cancel', [PaymentCancelController::class, 'index']);
