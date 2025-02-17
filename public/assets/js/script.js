@@ -325,11 +325,11 @@ function loadAllEvents() {
             events.forEach(event => {
                 html += `
                         <div class="bg-gray-800 p-4 rounded-lg">
-                            <img src="/assets/img/event.jpg" alt="Event Image" class="w-full h-40 object-cover rounded">
-                            <div class="mt-2 text-orange-500">${event.categoryId}</div>
+                            <img src="/assets${event.picture}" alt="Event Image" class="w-full h-40 object-cover rounded">
+                            <div class="mt-2 text-orange-500">${event.name}</div>
                             <h3 class="text-white text-xl font-bold">${event.title}</h3>
                             <p class="text-gray-400">${event.location}</p>
-                            <p class="text-white font-bold mt-2">${event.price}</p>
+                            <p class="text-white font-bold mt-2">${event.price == 0 ? "Free" : event.price} </p>
                             <a href="/events/${event.id}" class="view-details btn btn-sm bg-orange-600 text-white mt-2" data-id="${event.id}">View Details</a>
                         </div>
                     `;
