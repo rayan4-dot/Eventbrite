@@ -1,22 +1,24 @@
 <?php
 
+
 namespace App\Core;
 
 abstract class DbModel extends Model
 {
-    abstract public function getTableName();
+    abstract public function getTableName();  
     abstract public function getAttributes();
     abstract public function getPrimaryKey();
 
     public function save()
     {
-        $table = $this->getTableName();
+        $table = $this->getTableName();  
         $attributes = $this->getAttributes();
         $columns = implode(',', $attributes);
         $placeholders = implode(',', array_fill(0, count($attributes), '?'));
         $sql = "INSERT INTO $table ($columns) VALUES ($placeholders);";
         $stmt = $this->prepare($sql);
         $values = [];
+
         foreach($attributes as $attribute) {
             $values[] = $this->{$attribute};
         }
@@ -36,9 +38,9 @@ abstract class DbModel extends Model
     {
         $tableName = (new static())->getTableName();
         $attributes = array_keys($where);
+        $columns = implode(",",(new static())->getAttributes());
         $sql = implode(" AND ", array_map(fn($attr) => "$attr = :$attr", $attributes));
-        $stmt = self::prepare("SELECT * FROM $tableName WHERE $sql");
-
+        $stmt = self::prepare("SELECT     $columns  FROM $tableName WHERE $sql");
         foreach ($where as $key => $item) {
             $stmt->bindValue(":$key", $item);
         }
@@ -96,9 +98,9 @@ abstract class DbModel extends Model
     }
 
 
-    public function getDb(): Database
+    public function getDb()
     {
-        return Application::$app->db;
+        return Application::$app->db->conn;
     }
 
     public static function prepare($sql)
@@ -106,4 +108,11 @@ abstract class DbModel extends Model
         return Application::$app->db->conn->prepare($sql);
     }
 
+    public static function findBySql($sql)
+    {
+        $stmt = self::prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+    }
 }
+
