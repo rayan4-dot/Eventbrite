@@ -5,7 +5,9 @@
     "vlucas/phpdotenv": "^5.2",
     "symfony/var-dumper": "^5.3",
     "twig/twig": "^3.19",
-    "ext-pdo": "*"
+    "ext-pdo": "*",
+    "stripe/stripe-php": "^16.5",
+    "paypal/rest-api-sdk-php": "^1.14"
   },
   "autoload": {
     "psr-4": {
