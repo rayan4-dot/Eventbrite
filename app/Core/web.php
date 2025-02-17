@@ -17,10 +17,11 @@ $app->router->post('/login', [AuthController::class, 'login']);
 
 $app->router->get('/register', [AuthController::class, 'register']);
 $app->router->post('/register', [AuthController::class, 'register']);
+$app->router->get('/dashboard', [AdminController::class, 'dashboard']);
+
 
 $app->router->get('/logout', [AuthController::class, 'logout']);
 
-// events routes
 $app->router->get('/events', [EventController::class, 'index']);
 $app->router->get('/events/{id}', [EventController::class, 'show']);
 $app->router->get('/events/create', [EventController::class, 'create']);
@@ -29,7 +30,6 @@ $app->router->post('/events/create', [EventController::class, 'create']);
 $app->router->get('/admin/dashboard', [AdminController::class, 'dashboard']);
 $app->router->get('/admin/users', [AdminController::class, 'users']);
 
-// Categories routes
 $app->router->get('/admin/categories', [CategoryController::class, 'create']);
 $app->router->post('/admin/categories', [CategoryController::class, 'create']);
 $app->router->get('/admin/categories/edit/{id}', [CategoryController::class, 'editCategory']);
@@ -40,6 +40,11 @@ $app->router->post('/book', [\App\Controllers\BookingController::class, 'bookEve
 $app->router->get('/tickets', [TicketController::class, 'showAll']);
 $app->router->get('/tickets/{id}', [TicketController::class, 'show']);
 $app->router->get('/api/tickets/{id}/download', [TicketController::class, 'downloadTicket']);
+
+$app->router->post('/admin/approve-user/{id}', [AdminController::class, 'approveUser']);
+$app->router->post('/admin/reject-user/{id}', [AdminController::class, 'rejectUser']);
+$app->router->post('/admin/block-user/{id}', [AdminController::class, 'blockUser']);
+$app->router->post('/admin/unblock-user/{id}', [AdminController::class, 'unblockUser']);
 
 $app->router->get('/api/categories', [CategoryController::class, 'getAllCategories']);
 $app->router->get('/api/regions', [RegionController::class, 'getAllRegions']);

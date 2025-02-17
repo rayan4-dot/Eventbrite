@@ -12,6 +12,7 @@ class Category extends DbModel
 
     public function getTableName(): string
     {
+        // TODO: Implement getTableName() method.
         return 'categories';
     }
 
@@ -23,6 +24,7 @@ class Category extends DbModel
 
     public function getAttributes(): array
     {
+        // TODO: Implement getAttributes() method.
         return ['name', 'description'];
     }
 
