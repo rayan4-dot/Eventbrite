@@ -8,7 +8,7 @@ class OnlineEvent extends Event
 
     public function getAttributes() : array
     {
-        return ['title', 'picture', 'categoryId', 'description', 'eventDate', 'capacity', 'type', 'price', 'meetLink'];
+        return ['id', 'title', 'picture', 'categoryId', 'description', 'eventDate', 'capacity', 'type', 'price', 'meetLink'];
     }
 
     public function rules(): array

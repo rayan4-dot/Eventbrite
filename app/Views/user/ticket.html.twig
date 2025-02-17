@@ -1,0 +1,113 @@
+{% extends 'layouts/main.twig' %}
+{% block title %}Ticket{% endblock %}
+{% block content %}
+<div class="pt-16">
+    <div id="ticket-container" class="container mx-auto px-4 py-8" data-ticket-id="{{ ticketId }}">
+        <div class="max-w-2xl mx-auto">
+            <div class="card bg-gray-800 shadow-xl overflow-hidden">
+                <div class="relative">
+                    <img id="eventImage" src="" alt="Event Image" class="w-full h-64 object-cover">
+                    <div class="absolute inset-0 hero-gradient"></div>
+                    <div class="absolute top-4 right-4 bg-orange-600 text-white px-4 py-2 rounded-lg">
+                        <span class="text-lg font-bold">Ticket #12345</span>
+                    </div>
+                </div>
+
+                <div class="card-body text-white">
+                    <h1 id="eventTitle" class="card-title text-3xl font-bold">Tech Innovation Summit 2024</h1>
+
+                    <div class="grid md:grid-cols-2 gap-4 mt-4">
+                        <div>
+                            <h2 class="text-xl font-semibold mb-2">Event Details</h2>
+                            <div class="space-y-2">
+                                <div class="flex items-center gap-2 text-gray-300">
+                                    <i class="fas fa-calendar-alt text-orange-600"></i>
+                                    <span id="eventDate">March 15-16, 2024</span>
+                                </div>
+                                <div class="flex items-center gap-2 text-gray-300">
+                                    <i class="fas fa-map-marker-alt text-orange-600"></i>
+                                    <span id="eventCity">San Francisco, CA</span>
+                                </div>
+                                <div class="flex items-center gap-2 text-gray-300">
+                                    <i class="fas fa-clock text-orange-600"></i>
+                                    <span>9:00 AM - 5:00 PM</span>
+                                </div>
+                                <div class="flex items-center gap-2 text-gray-300">
+                                    <i class="fas fa-building text-orange-600"></i>
+                                    <span id="eventLocation">Moscone Center</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <h2 class="text-xl font-semibold mb-2">Ticket Holder</h2>
+                            <div class="space-y-2">
+                                <div class="flex items-center gap-2 text-gray-300">
+                                    <i class="fas fa-user text-orange-600"></i>
+                                    <span id="holderName">John Doe</span>
+                                </div>
+                                <div class="flex items-center gap-2 text-gray-300">
+                                    <i class="fas fa-envelope text-orange-600"></i>
+                                    <span id="holderEmail">john.doe@example.com</span>
+                                </div>
+                                <div class="flex items-center gap-2 text-gray-300">
+                                    <i class="fas fa-ticket-alt text-orange-600"></i>
+                                    <span>Early Bird Ticket</span>
+                                </div>
+                                <div class="flex items-center gap-2 text-gray-300">
+                                    <i class="fas fa-dollar-sign text-orange-600"></i>
+                                    <span id="eventPrice">$299</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-actions justify-between items-center mt-6">
+                        <div class="flex items-center gap-2">
+                            <i class="fas fa-check-circle text-green-500"></i>
+                            <span class="text-green-500">Ticket Confirmed</span>
+                        </div>
+                        <a href="/api/tickets/{{ ticketId }}/download" class="btn bg-orange-600 hover:bg-orange-700 text-white border-none">
+                            <i class="fas fa-download mr-2"></i>
+                            Download Ticket
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const ticketContainer = document.getElementById('ticket-container');
+            let ticketId = ticketContainer.getAttribute('data-ticket-id');
+            console.log(ticketId);
+            const xhr = new XMLHttpRequest();
+            xhr.open('GET', `/api/ticket/${ticketId}`, true);
+            xhr.onreadystatechange = function() {
+                if(xhr.readyState === 4) {
+                    if(xhr.status === 200) {
+                        let ticket = JSON.parse(xhr.responseText);
+                        console.log(ticket)
+                        document.getElementById('eventImage').src = '/assets' + ticket.picture;
+                        document.getElementById('eventTitle').textContent = ticket.title;
+                        document.getElementById('eventDate').textContent = ticket.eventdate;
+                        document.getElementById('eventCity').textContent = ticket.name;
+                        document.getElementById('eventLocation').textContent = ticket.location;
+                        document.getElementById('holderName').textContent = ticket.fullname;
+                        document.getElementById('holderEmail').textContent = ticket.email;
+                        if(ticket.price == '0') {
+                            document.getElementById('eventPrice').textContent = "Free";
+                        } else {
+                            document.getElementById('eventPrice').textContent = ticket.price;
+                        }
+                    }
+                }
+            }
+            xhr.send();
+        })
+    </script>
+{% endblock %}

@@ -29,7 +29,7 @@ class AuthController extends Controller
         Application::$app->response->redirect('/');
     }
 
-    public function register(Request $request)
+    public function register(Request $request) : void
     {
         $user = new User();
         if($request->isPost()) {

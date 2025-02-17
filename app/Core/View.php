@@ -15,6 +15,6 @@ class View
     }
     public function renderView(string $view, array $params = []) : void
     {
-        echo $this->twig->render("$view.html.twig", $params);
+        echo $this->twig->render("$view.twig", $params);
     }
 }

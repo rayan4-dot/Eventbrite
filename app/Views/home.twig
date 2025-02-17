@@ -1,4 +1,4 @@
-{% extends 'layouts/main.html.twig' %}
+{% extends 'layouts/main.twig' %}
 
 {% block title %}Eventbrite-Home{% endblock %}
 
@@ -84,50 +84,29 @@
     </div>
 
     <!-- Categories -->
-    <div class="border-b border-gray-800">
-        <div class="max-w-7xl mx-auto px-4">
-            <div class="flex space-x-8 overflow-x-auto py-4">
-                <a href="#" class="text-white border-b-2 border-orange-600 pb-4 whitespace-nowrap">All</a>
-                <a href="#" class="text-gray-400 hover:text-white whitespace-nowrap">For you</a>
-                <a href="#" class="text-gray-400 hover:text-white whitespace-nowrap">Online</a>
-                <a href="#" class="text-gray-400 hover:text-white whitespace-nowrap">Today</a>
-                <a href="#" class="text-gray-400 hover:text-white whitespace-nowrap">This weekend</a>
-                <a href="#" class="text-gray-400 hover:text-white whitespace-nowrap">Free</a>
-                <a href="#" class="text-gray-400 hover:text-white whitespace-nowrap">Music</a>
-                <a href="#" class="text-gray-400 hover:text-white whitespace-nowrap">Food & Drink</a>
-            </div>
-        </div>
-    </div>
+{#    <div class="border-b border-gray-800">#}
+{#        <div class="max-w-7xl mx-auto px-4">#}
+{#            <div class="flex space-x-8 overflow-x-auto py-4">#}
+{#                <a href="#" class="text-white border-b-2 border-orange-600 pb-4 whitespace-nowrap">All</a>#}
+{#                <a href="#" class="text-gray-400 hover:text-white whitespace-nowrap">For you</a>#}
+{#                <a href="#" class="text-gray-400 hover:text-white whitespace-nowrap">Online</a>#}
+{#                <a href="#" class="text-gray-400 hover:text-white whitespace-nowrap">Today</a>#}
+{#                <a href="#" class="text-gray-400 hover:text-white whitespace-nowrap">This weekend</a>#}
+{#                <a href="#" class="text-gray-400 hover:text-white whitespace-nowrap">Free</a>#}
+{#                <a href="#" class="text-gray-400 hover:text-white whitespace-nowrap">Music</a>#}
+{#                <a href="#" class="text-gray-400 hover:text-white whitespace-nowrap">Food & Drink</a>#}
+{#            </div>#}
+{#        </div>#}
+{#    </div>#}
 
     <!-- Events Grid -->
     <div class="py-16">
         <div class="max-w-7xl mx-auto px-4">
             <h2 class="text-3xl font-bold mb-12">Popular Events</h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="event-card bg-gray-800 rounded-xl overflow-hidden border border-gray-700">
-                    <div class="relative">
-                       <img src="" alt="" class="w-full h-56 object-cover">
-                        <div class="absolute top-4 right-4 bg-gray-900/80 px-3 py-1 rounded-full text-sm">
-                        </div>
-                    </div>
-                    <div class="p-6 space-y-3">
-                        <div class="flex items-center gap-2 text-sm">
-                            <span class="text-orange-500 font-medium"></span>
-                            <span class="text-gray-500">•</span>
-                            <span class="text-gray-400"></span>
-                        </div>
-                        <h3 class="font-bold text-xl"></h3>
-                        <p class="text-gray-400"></p>
-                        <div class="flex items-center justify-between mt-4">
-                            <span class="text-lg font-bold text-orange-500"></span>
-                            <button class="px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded-lg transition-colors">
-                                Details
-                            </button>
-                        </div>
-                    </div>
-                </div>
+            <div id="topEventsContainer" class="grid grid-cols-1 md:grid-cols-3 gap-8">
+
             </div>
-            <p class="text-center text-gray-400">No events available.</p>
+            <p class="text-center text-gray-400 hidden">No events available.</p>
         </div>
     </div>
 
@@ -187,4 +166,10 @@
 
 {% block scripts %}
     <script src="/assets/js/main.js"></script>
+    <script src="/assets/js/script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            loadTopEvents();
+        })
+    </script>
 {% endblock %}

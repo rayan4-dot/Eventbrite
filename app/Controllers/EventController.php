@@ -5,7 +5,6 @@ namespace App\Controllers;
 use App\Core\Controller;
 use App\Core\Http\Request;
 use App\Core\Http\Response;
-use App\Core\DbModel;
 use App\Models\F2FEvent;
 use App\Models\OnlineEvent;
 use App\Models\Event;
@@ -17,9 +16,10 @@ class EventController extends Controller
         $this->render('/events/index');
     }
 
-    public function show(): void
+    public function show(Request $request, Response $response, array $params = []): void
     {
-        $this->render('/events/show');
+        $eventId = $params[0];
+        $this->render('/events/show', ['eventId' => $eventId]);
     }
 
     public function create(Request $request, Response $response): void
@@ -62,6 +62,14 @@ class EventController extends Controller
         header('Content-Type: application/json');
         echo json_encode($events);
         return;
+    }
+
+    public function getTopEvents()
+    {
+        $events = Event::getTopEvents();
+        header("Content-Type: application/json");
+        echo json_encode($events);
+        exit;
     }
 
     public function getEventById(Request $request, Response $response, array $params = []) : void

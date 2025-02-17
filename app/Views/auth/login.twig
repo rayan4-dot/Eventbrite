@@ -1,4 +1,4 @@
-{% extends 'layouts/authLayout.html.twig' %}
+{% extends 'layouts/authLayout.twig' %}
 
 {% block title  %}Login - Eventbrite{% endblock %}
 
@@ -7,7 +7,7 @@
 
 {% block formContent %}
 
-    {% import 'macros/input.html.twig' as form %}
+    {% import 'macros/input.twig' as form %}
 
     {{ form.inputField('email', 'email', 'Email', model.email, '', model.errors) }}
     {{ form.inputField('password', 'password', 'Password', model.password, '', model.errors) }}

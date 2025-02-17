@@ -10,7 +10,7 @@ class F2FEvent extends Event
     public function getAttributes() : array
     {
         // TODO: Implement getAttributes() method.
-        return ['title', 'picture', 'categoryId', 'description', 'eventDate', 'price', 'capacity', 'type', 'cityId', 'location'];
+        return ['id', 'title', 'picture', 'categoryId', 'description', 'eventDate', 'price', 'capacity', 'type', 'cityId', 'location'];
     }
 
     public function rules() : array
