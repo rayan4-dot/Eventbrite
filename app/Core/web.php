@@ -5,6 +5,9 @@ use App\Controllers\AuthController;
 use App\Controllers\EventController;
 use App\Controllers\AdminController;
 use App\Controllers\CategoryController;
+use App\Controllers\PaymentController;
+use App\Controllers\PaymentSuccessController;
+use App\Controllers\PaymentCancelController;
 
 $app->router->get('/', [HomeController::class, 'home']);
 
@@ -28,3 +31,13 @@ $app->router->get('/admin/categories/edit/{id}', [CategoryController::class, 'ed
 $app->router->post('/admin/categories/edit/{id}', [CategoryController::class, 'edit']);
 
 $app->router->post('/admin/categories/delete/{id}', [CategoryController::class, 'delete']);
+$app->router->get('/payment/create', [PaymentController::class, 'createPayment']);
+$app->router->get('/payment/success', [PaymentController::class, 'executePayment']);
+$app->router->get('/payment/cancel', function () {
+    // handle payment cancellation
+    echo "Payment cancelled.";
+});
+
+
+$router->get('/payment/success', [PaymentSuccessController::class, 'index']);
+$router->get('/payment/cancel', [PaymentCancelController::class, 'index']);
