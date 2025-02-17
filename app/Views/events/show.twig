@@ -1,11 +1,11 @@
-{% extends 'layouts/main.html.twig' %}
+{% extends 'layouts/main.twig' %}
 
 {% block title %}{% endblock %}
 
 {% block content %}
     <!-- Event Header -->
 
-    <div id="eventDetails" class="pt-5">
+    <div id="eventDetails" class="pt-5" data-event-id="{{ eventId }}">
         <div class="container mx-auto px-4 mt-20 bg-gray-900/800">
             <div class="bg-gray-800 rounded-lg overflow-hidden">
                 <div class="relative h-96">
@@ -183,7 +183,9 @@
     <script src="/assets/js/script.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            loadEventDetails(1);
+            const eventDetails = document.getElementById('eventDetails');
+            let eventId = eventDetails.getAttribute('data-event-id');
+            loadEventDetails(eventId);
             initBookingModal();
         })
         // Function to initialize the modal based on event type

@@ -35,7 +35,8 @@ abstract class Event extends DbModel
     public static function getAllEvents() : array
     {
         $db = Application::$app->db->conn;
-        $sql = "SELECT * FROM events";
+        $sql = "SELECT events.title, categories.name, events.picture, events.location, events.price FROM events
+        JOIN categories ON categories.id = events.categoryId";
         $stmt = $db->prepare($sql);
         $stmt->execute();
         $events = $stmt->fetchAll(\PDO::FETCH_CLASS);
