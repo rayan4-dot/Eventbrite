@@ -11,3 +11,5 @@ Dockerfile
 composer.json
 
 composer.lock
+
+.vscode/
